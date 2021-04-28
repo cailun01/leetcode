@@ -54,6 +54,4 @@ public:
         backtrack(board, 0);
         return res;
     }
-
-
 };
