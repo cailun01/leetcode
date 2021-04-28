@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "string": "cpp",
+    "vector": "cpp",
+    "deque": "cpp",
+    "*.tcc": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "array": "cpp",
+    "initializer_list": "cpp",
+    "utility": "cpp",
+    "mutex": "cpp",
+    "functional": "cpp"
+  }
+}
