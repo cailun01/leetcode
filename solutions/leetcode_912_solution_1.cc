@@ -1,8 +1,9 @@
 #include "headers.h"
-// 归并排序
+// 归并排序的递归解法
 class Solution {
 public:
     vector<int> temp;
+    // 将数组nums的[l1, r1]和[l2, r2]合并为有序区间(此处l2 = r1 + 1)
     void merge(vector<int>& nums, int l1, int r1, int l2, int r2) {
         int index = 0;
         int i = l1, j = l2;
@@ -20,7 +21,7 @@ public:
             temp[index++] = nums[j++];
         }
         for (int i = 0; i < index; ++i) {
-            nums[l1+i] = temp[i];
+            nums[l1 + i] = temp[i];
         }
         return;
     }

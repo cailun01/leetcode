@@ -40,6 +40,16 @@
 */
 class Solution {
 public:
+    /*
+    (1)先将A[1]存至某个临时变量pivot，并令两个下标left, 
+       right分别指向序列首尾(如令left=l, right=n)。
+    (2)只要right指向的元素A[right]大于pivot，就将right不断左移；
+       当A[right]<=pivot时，将元素A[left]挪到left指向的元素A[left]处。
+    (3)只要left指向的元素A[left]不超过pivot，就将left不断右移；
+       当某个时候A[left]>pivot时，将元素A[left]挪到right指向的元素A[right]处。
+    (4)重复(2)(3)直到left与right相遇，把pivot(即原A[1])放到相遇的地方
+
+    */
     int partition(vector<int>& nums, int left, int right) {
         int pivot = nums[left];
         while (left < right) {
@@ -52,6 +62,7 @@ public:
             }
             nums[right] = nums[left];
         }
+        // 此时left == right
         nums[left] = pivot;
         return left;
     }
