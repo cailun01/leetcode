@@ -81,7 +81,7 @@ class Solution {
           pre->next = h2;
         }
         // 合并完后，需要修改新的合并单元的尾部pre指针指向下一个合并单元头部h
-        while (c1 > 0 or c2 > 0) {
+        while (c1 > 0 || c2 > 0) {
           pre = pre->next;
           c1--;
           c2--;
