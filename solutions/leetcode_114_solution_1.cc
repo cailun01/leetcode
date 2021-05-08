@@ -15,6 +15,10 @@
 
 输入：root = [0]
 输出：[0]
+
+题解：
+https://labuladong.github.io/algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B3%BB%E5%88%97/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B3%BB%E5%88%971.html
+
 */
 
 class Solution {
@@ -36,6 +40,3 @@ public:
         p->right = right_temp;
     }
 };
-
-// 题解：
-https://labuladong.github.io/algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B3%BB%E5%88%97/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B3%BB%E5%88%971.html
