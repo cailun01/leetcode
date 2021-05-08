@@ -1,10 +1,17 @@
 #include "headers.h"
-// 归并排序的递归解法
+/* 归并排序的递归解法
+
+归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略
+（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案"修补"在一起，即分而治之)。
+
+*/
 class Solution {
 public:
     vector<int> temp;
     // 将数组nums的[l1, r1]和[l2, r2]合并为有序区间(此处l2 = r1 + 1)
     void merge(vector<int>& nums, int l1, int r1, int l2, int r2) {
+        // 对于已经有序的子序列nums[l1...r1]和nums[l2...r2]，合并为最终序列
+        // 遍历子序列，将较小的值放入temp
         int index = 0;
         int i = l1, j = l2;
         while (i <= r1 && j <= r2) {
@@ -14,12 +21,15 @@ public:
                 temp[index++] = nums[j++];
             }
         }
+        //将左边剩余元素填充进temp中
         while (i <= r1) {
             temp[index++] = nums[i++];
         }
+        //将右序列剩余元素填充进temp中
         while (j <= r2) {
             temp[index++] = nums[j++];
         }
+        //将temp中的元素全部拷贝到原数组中
         for (int i = 0; i < index; ++i) {
             nums[l1 + i] = temp[i];
         }
