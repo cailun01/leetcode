@@ -27,12 +27,16 @@ public:
         if (!root) return;
         flatten(root->left);
         flatten(root->right);
-
+        /**** 后序遍历位置 ****/
+        // 1、左右子树已经被拉平成一条链表
         TreeNode* left_temp = root->left;
         TreeNode* right_temp = root->right;
+
+        // 2、将左子树作为右子树
         root->left = nullptr;
         root->right = left_temp;
 
+        // 3、将原先的右子树接到当前右子树的末端
         TreeNode* p = root;
         while (p->right) {
             p = p->right;
