@@ -23,12 +23,15 @@ public:
             fast = fast->next->next;
             slow = slow->next;
             if (fast == slow) {
+                // fast和slow都指向环的头节点。
                 break;
             }
         }
+        // 没有环
         if (fast == nullptr || fast->next == nullptr) {
             return nullptr;
         }
+        // 从head出发，与slow同步前进。相遇后指向环的节点
         ListNode* ptr = head;
         while (ptr != slow) {
             ptr = ptr->next;
