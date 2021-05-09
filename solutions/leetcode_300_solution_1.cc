@@ -29,9 +29,7 @@ public:
 
 
     int res = 0;
-    for (auto & c : dp) {
-      res = max(c, res);
-    }
+    res = *max_element(dp.begin(), dp.end());
     return res;
   }
 };
