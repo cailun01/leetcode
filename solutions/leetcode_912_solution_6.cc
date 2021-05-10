@@ -35,6 +35,7 @@ public:
             int r_son = 2 * root + 2; // p节点的右孩子
             // max_son是值最大的孩子节点
             int max_son = 0;
+            // 如果右孩子存在(r_son < size)，且右孩子的值大于左孩子
             if (r_son < size && nums[r_son] > nums[l_son]) {
                 max_son = r_son;
             } else {
