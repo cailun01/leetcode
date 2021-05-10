@@ -21,4 +21,10 @@ def solved_questions():
         solutions[question_number] = num_solutions
 
     solutions_by_order = OrderedDict(sorted(solutions.items()))
-    return solutions_by_order
+    num_solved_questions = len(solutions_by_order)
+    return solutions_by_order, num_solved_questions
+
+
+if __name__ == "__main__":
+    _, num_solved_questions = solved_questions()
+    print("num_solved_questions: ", num_solved_questions)
