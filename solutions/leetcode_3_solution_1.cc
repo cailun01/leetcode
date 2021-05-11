@@ -15,20 +15,27 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        const int n = s.length();
-        int ans = 0; // 最长子串
-        // 当字符作为数组下标时，其表示的下标值为该字符的ASCII码的十进制值。
-        unordered_map<char, int> map;
-        int i = 0;
-        for (int j = 0; j < n; ++j) {
-            char letter = s[j];
-            if (map.find(letter) != map.end()) {
-                i = max(i, map[letter] + 1);
+        unordered_map<char, int> window;
+        int left = 0, right = 0;
+        int res = 0; // 记录结果
+        while (right < s.size()) {
+            char c = s[right];
+            right++;
+            // 进行窗口内数据的一系列更新
+            window[c]++;
+            // 判断左侧窗口是否要收缩
+            while (window[c] > 1) {
+                char d = s[left];
+                left++;
+                // 进行窗口内数据的一系列更新
+                window[d]--;
             }
-            ans = max(ans, j - i + 1);
-            map[letter] = j; // 当子串符合要求时，该字母的位置
+            // 在这里更新答案
+            // 此时right已经右移，不再指向字符c
+            // 因此长度为 right - left而不是right-left + 1
+            res = max(res, right - left);
         }
-        return ans;
+        return res;
     }
 };
 
