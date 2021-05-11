@@ -2,6 +2,7 @@ class Solution {
 public:
     bool canJump(vector<int>& nums) {
         int n = nums.size();
+        // farthest表示从索引0的位置开始跳，能跳的最大距离
         int farthest = 0;
         for (int i = 0; i < n - 1; i++) {
             // 不断计算能跳到的最远距离
