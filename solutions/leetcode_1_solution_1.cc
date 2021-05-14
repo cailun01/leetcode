@@ -13,7 +13,7 @@ You may assume that each input would have exactly one solution, and you may not 
 所以返回 [0, 1]
 */
 
-// 暴力解放，两个循环，时间复杂度为O(n^2)，空间复杂度为O(1)
+// 暴力解法，两个循环，时间复杂度为O(n^2)，空间复杂度为O(1)
 
 class Solution {
 public:
