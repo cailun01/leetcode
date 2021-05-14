@@ -14,30 +14,44 @@
 
 */
 
+
+/*
+我们用了一个计数器count，当字典序较小的字符试图「挤掉」栈顶元素的时候，
+在count中检查栈顶元素是否是唯一的，只有当后面还存在栈顶元素的时候才能挤掉，否则不能挤掉。
+*/
 class Solution {
 public:
     string removeDuplicateLetters(string s) {
-        cout << s.size() << endl;
         if (s.size() == 1) {
             return s;
         }
+        // 存放去重的结果
         stack<char> stk;
+        // 维护一个计数器记录字符串中字符的数量
         vector<int> count(26, 0);
+        // 布尔数组初始值为 false，记录栈中是否存在某个字符
         vector<bool> in_stack(26, false);
         
-        for (int i = 0; i < s.size(); ++i) {
-            count[s[i] - 'a']++;
+        for (const auto& c : s) {
+            count[c - 'a']++;
         }
 
         for (const auto& c : s) {
+            // 每遍历过一个字符，都将对应的计数减一
             count[c - 'a']--;
+            
+            // 如果字符 c 存在栈中，直接跳过
             if (in_stack[c - 'a']) {
                 continue;
             }
+            // 插入之前，和之前的元素比较一下大小
+            // 如果字典序比前面的小，pop 前面的元素
             while (!stk.empty() && stk.top() > c) {
+                // 若之后不存在栈顶元素了，则停止 pop
                 if (count[stk.top() - 'a'] == 0) {
                     break;
                 }
+                // 弹出栈顶元素，并把该元素标记为不在栈中。若之后还有，则可以 pop
                 in_stack[stk.top() - 'a'] = false;
                 stk.pop();
             }
@@ -49,6 +63,7 @@ public:
             result.push_back(stk.top());
             stk.pop();
         }
+        // 栈中元素插入顺序是反的，需要 reverse 一下
         reverse(result.begin(), result.end());
         return result;
     }
