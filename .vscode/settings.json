@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.cu": "cpp",
     "string": "cpp",
     "vector": "cpp",
     "deque": "cpp",
@@ -10,7 +11,8 @@
     "initializer_list": "cpp",
     "utility": "cpp",
     "mutex": "cpp",
-    "functional": "cpp"
+    "functional": "cpp",
+    "map": "cpp"
   },
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,

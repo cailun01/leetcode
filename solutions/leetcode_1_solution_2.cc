@@ -5,7 +5,7 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         // hash的key是数组中元素的值，value是该元素在数组的下标
-        map<int, int> hash;
+        unordered_map<int, int> hash;
         for (int i = 0; i < nums.size(); ++i) {
             hash[nums[i]] = i;
         }
