@@ -30,9 +30,9 @@ public:
         /**
          * 构造大顶堆的下浮操作
          */
-        while (2 * root + 1 < size) { // 当p存在孩子时
-            int l_son = 2 * root + 1; // p节点的左孩子
-            int r_son = 2 * root + 2; // p节点的右孩子
+        while (2 * root + 1 < size) { // 当root存在孩子时
+            int l_son = 2 * root + 1; // root节点的左孩子
+            int r_son = 2 * root + 2; // root节点的右孩子
             // max_son是值最大的孩子节点
             int max_son = 0;
             // 如果右孩子存在(r_son < size)，且右孩子的值大于左孩子
