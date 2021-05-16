@@ -12,7 +12,8 @@
     "utility": "cpp",
     "mutex": "cpp",
     "functional": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "random": "cpp"
   },
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
