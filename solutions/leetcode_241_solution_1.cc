@@ -11,7 +11,7 @@ public:
             char c = expression[i];
             if (c == '-' || c == '*' || c == '+') {
                 vector<int> left = diffWaysToCompute(expression.substr(0, i));
-                vector<int> right = diffWaysToCompute(expression.substr(i + 1, expression.size() - i));
+                vector<int> right = diffWaysToCompute(expression.substr(i + 1, expression.size() - i - 1));
                 for (int a : left) {
                     for (int b : right) {
                         if (c == '+') {
@@ -25,7 +25,7 @@ public:
                 }
             }
         }
-        // 递归最深处只有一个数字，不会触发if语句，也就不会给res中添加任何元素。
+        // 递归最深处只有一个数字，不会触发if(c=='-'||c =='*'||c=='+')语句，也就不会给res中添加任何元素。
         if (res.empty()) {
             res.push_back(stoi(expression));
         }
