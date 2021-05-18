@@ -15,7 +15,9 @@
     "map": "cpp",
     "random": "cpp",
     "list": "cpp",
-    "xstring": "cpp"
+    "xstring": "cpp",
+    "chrono": "cpp",
+    "algorithm": "cpp"
   },
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
