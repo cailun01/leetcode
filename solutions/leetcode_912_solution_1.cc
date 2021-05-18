@@ -30,8 +30,8 @@ public:
             temp[index++] = nums[j++];
         }
         //将temp中的元素全部拷贝到原数组中
-        for (int i = 0; i < index; ++i) {
-            nums[l1 + i] = temp[i];
+        for (int k = 0; k < index; ++k) {
+            nums[l1 + k] = temp[k];
         }
         return;
     }
