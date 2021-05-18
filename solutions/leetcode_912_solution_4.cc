@@ -19,6 +19,7 @@ public:
                     min_idx = j;
                 }
             }
+            // 经过上面的for循环，nums[min_idx]是nums[i...size-1]中的最小值
             swap(nums[min_idx], nums[i]);
         }
         return nums;
