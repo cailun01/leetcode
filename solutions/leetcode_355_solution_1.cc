@@ -100,12 +100,6 @@ public:
         u.post(tweetId);
     }
     
-    struct Comp {
-        bool operator() (Tweet* a, Tweet* b) {
-            return a->time() < b->time();
-        }
-    };
-
     /**  
     返回该user关注的人（包括它自己）最近的动态id，最多10条，
     而且这些动态必须按从新到旧的时间线顺序排序
@@ -117,8 +111,11 @@ public:
         vector<int> res;
         // 关注列表的用户Id
         set<int> users = userMap[userId].followed;
+        auto Comp = [](const Tweet* a, const Tweet* b) -> bool {
+            return a->time() < b->time();
+        };
         // 自动通过time属性从大到小排序，容量为users的大小
-        priority_queue<Tweet*, vector<Tweet*>, Comp> pq;
+        priority_queue<Tweet*, vector<Tweet*>, decltype(Comp)> pq(Comp);
         // 先将所有链表头节点插入优先级队列
         for (int id : users) {
             Tweet* twt = userMap[id].head;
