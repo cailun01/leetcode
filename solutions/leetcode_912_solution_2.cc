@@ -10,8 +10,8 @@
 然后按上述将的递归调用 randomized_quicksort(nums, l, pos - 1) 和 randomized_quicksort(nums, pos + 1, r) 即可。
 
 partition 函数的思路：
-(1) 先将A[left]存至某个临时变量pivot，并令两个下标left, 
-    right分别指向序列首尾(如令left=l, right=n)。
+(1) 先将A[left]存至某个临时变量pivot，并令两个下标left和right
+    分别指向序列首尾(如令left=l, right=n)。
 (2) 只要right指向的元素A[right]大于pivot，就将right不断左移；
     当A[right] <= pivot时，将元素A[left]挪到left指向的元素A[left]处。
 (3) 只要left指向的元素A[left]不超过pivot，就将left不断右移；
@@ -44,7 +44,7 @@ public:
             }
             nums[left] = nums[right];
             while (left < right && nums[left] <= pivot) {
-                left++;  // 反复右移right
+                left++;  // 反复右移left
             }
             nums[right] = nums[left];
         }
@@ -61,6 +61,7 @@ public:
 
     void randomized_quicksort(vector<int>& nums, int l, int r) {
         if (l < r) {
+            // nums[l...pos-1] < nums[pos] < nums[pos+1...r]
             int pos = randomized_partition(nums, l, r);
             randomized_quicksort(nums, l, pos - 1);
             randomized_quicksort(nums, pos + 1, r);
