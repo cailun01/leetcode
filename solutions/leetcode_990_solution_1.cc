@@ -3,7 +3,8 @@
 class Solution {
 public:
     bool equationsPossible(vector<string>& equations) {
-        int parent[26];
+        // 26 个英文字母
+        vector<int> parent(26);
         // 初始化数组
         for(int i = 0; i < 26; i++) {
             parent[i] = i;
@@ -16,6 +17,7 @@ public:
                 parent[x] = parent[y];
             }
         }
+        // 检查不等关系是否打破相等关系的连通性
         for (auto eq:equations) {
             if (eq[1] == '!') {
                 int x = find(eq[0] - 'a', parent);
@@ -27,8 +29,10 @@ public:
         }
         return true;
     }
-    int find(int x, int* parent) {
+    int find(int x, vector<int>& parent) {
         while (x != parent[x]) {
+            // 进行路径压缩
+            parent[x] = parent[parent[x]];
             x = parent[x];
         }
         return x;
