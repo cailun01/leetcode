@@ -34,44 +34,46 @@ partition 函数的思路：
         return;
     }
 */
+
+
 class Solution {
 public:
-    int partition(vector<int>& nums, int left, int right) {
-        int pivot = nums[left];
-        while (left < right) {
-            while (left < right && nums[right] > pivot) {
-                right--; // 反复左移right
-            }
-            nums[left] = nums[right];
-            while (left < right && nums[left] <= pivot) {
-                left++;  // 反复右移left
-            }
-            nums[right] = nums[left];
-        }
-        // 此时left == right
-        nums[left] = pivot; // 把pivot放到left与right相遇的地方
-        return left;
+  int partition(vector<int>& nums, int left, int right) {
+    int pivot = nums[left];
+    while (left < right) {
+      while (left < right && nums[right] > pivot) {
+        right--; // 反复左移right
+      }
+      nums[left] = nums[right];
+      while (left < right && nums[left] <= pivot) {
+        left++;  // 反复右移left
+      }
+      nums[right] = nums[left];
     }
+    // 此时left == right
+    nums[left] = pivot; // 把pivot放到left与right相遇的地方
+    return left;
+  }
 
-    int randomized_partition(vector<int>& nums, int l, int r) {
-        int i = rand() % (r - l + 1) + l;
-        swap(nums[l], nums[i]);
-        return partition(nums, l ,r);
-    }
+  int randomized_partition(vector<int>& nums, int l, int r) {
+    int i = rand() % (r - l + 1) + l;
+    swap(nums[l], nums[i]);
+    return partition(nums, l ,r);
+  }
 
-    void randomized_quicksort(vector<int>& nums, int l, int r) {
-        if (l < r) {
-            // nums[l...pos-1] < nums[pos] < nums[pos+1...r]
-            int pos = randomized_partition(nums, l, r);
-            randomized_quicksort(nums, l, pos - 1);
-            randomized_quicksort(nums, pos + 1, r);
-        }
-        return;
+  void randomized_quicksort(vector<int>& nums, int l, int r) {
+    if (l < r) {
+      // nums[l...pos-1] < nums[pos] < nums[pos+1...r]
+      int pos = randomized_partition(nums, l, r);
+      randomized_quicksort(nums, l, pos - 1);
+      randomized_quicksort(nums, pos + 1, r);
     }
+    return;
+  }
 
-    vector<int> sortArray(vector<int>& nums) {
-        srand((unsigned)time(NULL));
-        randomized_quicksort(nums, 0, (int)nums.size() - 1);
-        return nums;
-    }
+  vector<int> sortArray(vector<int>& nums) {
+    srand((unsigned)time(NULL));
+    randomized_quicksort(nums, 0, (int)nums.size() - 1);
+    return nums;
+  }
 };
