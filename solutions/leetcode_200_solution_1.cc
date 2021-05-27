@@ -46,6 +46,7 @@ private:
     if (r >= grid.size() || c >= grid[0].size() || r < 0 || c < 0) {
       return;
     }
+    // 遇到海洋或已访问的陆地也返回
     if (grid[r][c] != '1') {
       return;
     }
