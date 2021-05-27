@@ -19,34 +19,28 @@
 
 class Solution {
 public:
+  string palindrome(string& s, int l, int r) {
+    // 防止索引越界
+    while (l >= 0 && r < s.size() && s[l] == s[r]) {
+      // 向两边展开
+      l--; r++;
+    }
+    // 此时l指向回文子串的左侧，r指向回文子串的右侧
+    return s.substr(l + 1, r - l - 1);
+  }
+
   string longestPalindrome(string &s) {
-  const int len = s.size();
-  int maxlen = 1;
-  int start = 0;
-
-  for(int i = 0; i < len; i++){//求长度为奇数的回文串    
-    int j = i - 1, k = i + 1;
-    while(j >= 0 && k < len && s.at(j) == s.at(k)) {
-      if(k - j + 1 > maxlen) {
-        maxlen = k - j + 1;
-        start = j;
-      }
-      j--;
-      k++;
+    string res;
+    for (int i = 0; i < s.size(); ++i) {
+      // 以s[i]为中心的最长回文子串
+      string s1 = palindrome(s, i, i);
+      // 以s[i]和s[i+1]为中心的最长回文子串
+      string s2 = palindrome(s, i, i + 1);
+      // res = longest(res, s1, s2);
+      res = res.size() > s1.size() ? res : s1;
+      res = res.size() > s2.size() ? res : s2;
     }
-  }
-  for(int i = 0; i < len; i++){//求长度为偶数的回文串
-    int j = i, k = i + 1;
-    while(j >= 0 && k < len && s.at(j) == s.at(k)) {
-      if(k - j + 1 > maxlen) {
-        maxlen = k - j + 1;
-        start = j;
-      }
-      j--;
-      k++;
-    }
+    return res;
   }
 
-  return s.substr(start, maxlen);
-}
 };
