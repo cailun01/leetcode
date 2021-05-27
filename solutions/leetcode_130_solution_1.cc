@@ -1,5 +1,6 @@
 /*
-给你一个 rows x cols 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+给你一个 rows x cols 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，
+并将这些区域里所有的 'O' 用 'X' 填充。
 
 示例 1：
 输入：board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
@@ -97,7 +98,7 @@ public:
         uf.Union(j, dummy);
       }
       if (board[rows - 1][j] == 'O') {
-        uf.Union(cols * (rows - 1) + j, dummy);
+        uf.Union((rows - 1) * cols + j, dummy);
       }
     }
     // 方向数组 d 是上下左右搜索的常用手法
