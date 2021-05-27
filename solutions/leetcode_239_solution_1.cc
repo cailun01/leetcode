@@ -36,41 +36,41 @@
 
 class MonotonicQueue {
 private:
-    list<int> q;
+  list<int> q;
 public:
-    int max() {
-        return q.front();
-    }
+  int max() {
+    return q.front();
+  }
 
-    void push(int n) {
-        while (!q.empty() && q.back() < n) {
-            q.pop_back();
-        }
-        q.push_back(n);
+  void push(int n) {
+    while (!q.empty() && q.back() < n) {
+      q.pop_back();
     }
+    q.push_back(n);
+  }
 
-    void pop(int n) {
-        if (n == q.front()) {
-            q.pop_front();
-        }
+  void pop(int n) {
+    if (n == q.front()) {
+      q.pop_front();
     }
+  }
 };
 
 class Solution {
 private:
-    MonotonicQueue window;
+  MonotonicQueue window;
 public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        vector<int> result;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (i < k - 1) {
-                window.push(nums[i]);
-            } else {
-                window.push(nums[i]);
-                result.push_back(window.max());
-                window.pop(nums[i - k + 1]);
-            }
-        }
-        return result;
+  vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+    vector<int> result;
+    for (int i = 0; i < nums.size(); ++i) {
+      if (i < k - 1) {
+        window.push(nums[i]);
+      } else {
+        window.push(nums[i]);
+        result.push_back(window.max());
+        window.pop(nums[i - k + 1]);
+      }
     }
+    return result;
+  }
 };

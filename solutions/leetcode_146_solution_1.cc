@@ -87,7 +87,6 @@ public:
   int size() {
     return size_;
   }
-
 };
 
 class LRUCache {
@@ -154,5 +153,4 @@ private:
     int deleted_key = deleted_node->key;
     map.erase(deleted_key);
   }
-
 };
