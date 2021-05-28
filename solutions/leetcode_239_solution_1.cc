@@ -34,21 +34,28 @@
 输出：[4]
 */
 
+// 单调队列，队首元素是最大值，依次单调递减
 class MonotonicQueue {
 private:
+  // // 双链表，支持头部和尾部增删元素
   list<int> q;
 public:
   int max() {
+    // 队头的元素肯定是最大的
     return q.front();
   }
 
   void push(int n) {
+    // 将前面小于n的元素都删除
     while (!q.empty() && q.back() < n) {
       q.pop_back();
     }
     q.push_back(n);
   }
 
+  // 队头元素如果是 n，删除它
+  // 如果n不是最大值(不在对头)，那么队列里是没有的
+  // 因为在push时就被pop_back了
   void pop(int n) {
     if (n == q.front()) {
       q.pop_front();
@@ -64,6 +71,7 @@ public:
     vector<int> result;
     for (int i = 0; i < nums.size(); ++i) {
       if (i < k - 1) {
+        //先把窗口的前 k - 1 填满
         window.push(nums[i]);
       } else {
         window.push(nums[i]);
