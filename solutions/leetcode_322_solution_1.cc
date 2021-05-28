@@ -15,7 +15,7 @@ public:
     if (amount == 0) {
       return 0;
     }
-    // dp[i], 金额为i时，凑乘金额的最小硬币数。
+    // dp[i], 金额为i时，凑成金额的最小硬币数。
     // 数组大小为 amount + 1，初始值也为 amount + 1
     // 因为组成amount的硬币数最多是amount, 所以初始化为amount+1
     // 相当于初始化为正无穷。
