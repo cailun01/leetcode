@@ -1,4 +1,4 @@
-/*
+/* 452 用最少数量的箭引爆气球
 在二维空间中有许多球形的气球。对于每个气球，提供的输入是水平方向上，气球直径的开始和结束坐标。由于它是水平的，
 所以纵坐标并不重要，因此只要知道开始和结束的横坐标就足够了。开始坐标总是小于结束坐标。
 一支弓箭可以沿着 x 轴从不同点完全垂直地射出。在坐标 x 处射出一支箭，若有一个气球的直径的开始和结束坐标为 xstart，xend， 
@@ -27,27 +27,28 @@
 
 class Solution {
 public:
-    int findMinArrowShots(vector<vector<int>>& points) {
-        if (points.size() == 0) {
-            return 0;
-        } else if (points.size() == 1) {
-            return 1;
-        }
-
-        sort(points.begin(), points.end(), [](vector<int> a, vector<int> b) {
-            return a[1] < b[1];
-        });
-        // 至少需要一箭
-        int count = 1;
-        int x_end = points[0][1];
-        for (const auto point : points) {
-            int start = point[0];
-            if (start > x_end) {
-                // 不重叠，需要射箭的次数加1，更新区间
-                ++count;
-                x_end = point[1];
-            }
-        }
-        return count;
+  int findMinArrowShots(vector<vector<int>>& points) {
+    if (points.size() == 0) {
+      return 0;
+    } else if (points.size() == 1) {
+      return 1;
     }
+
+    sort(points.begin(), points.end(), 
+        [](vector<int> a, vector<int> b) {
+      return a[1] < b[1];
+    });
+    // 至少需要一箭
+    int count = 1;
+    int x_end = points[0][1];
+    for (const auto point : points) {
+      int start = point[0];
+      if (start > x_end) {
+        // 不重叠，需要射箭的次数加1，更新区间
+        ++count;
+        x_end = point[1];
+      }
+    }
+    return count;
+  }
 };

@@ -1,4 +1,4 @@
-/*
+/* 435 无重叠区间
 题目：
 给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。
 
@@ -23,30 +23,31 @@
 */
 class Solution {
 public:
-    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        if (intervals.size() == 0 || intervals.size() == 1) {
-            return 0;
-        }
-        // intervals中都是vector<int>，形式为 [ [start0, end0], [start1, end1] ... ]
-        // 让intervals中的vector<int>按照结尾end升序
-        sort(intervals.begin(), intervals.end(), [](vector<int> a, vector<int> b){
-            return a[1] < b[1];
-        });
-
-        int count = 0;
-        int x_end = intervals[0][1];
-        for (int i = 1; i < intervals.size(); ++i) {
-            const vector<int>& interval = intervals[i];
-            int start = interval[0];
-            if (start >= x_end) {
-                // 当前interval与上一个interval不重叠
-                // 更新x_end为当前interval的end
-                x_end = interval[1];
-            } else {
-                // start < x_end，需要该区间
-                ++count;
-            }
-        }
-        return count;
+  int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    if (intervals.size() == 0 || intervals.size() == 1) {
+      return 0;
     }
+    // intervals中都是vector<int>，形式为 [ [start0, end0], [start1, end1] ... ]
+    // 让intervals中的vector<int>按照结尾end升序
+    sort(intervals.begin(), intervals.end(), 
+        [](vector<int> a, vector<int> b){
+      return a[1] < b[1];
+    });
+
+    int count = 0;
+    int x_end = intervals[0][1];
+    for (int i = 1; i < intervals.size(); ++i) {
+      const vector<int>& interval = intervals[i];
+      int start = interval[0];
+      if (start >= x_end) {
+        // 当前interval与上一个interval不重叠
+        // 更新x_end为当前interval的end
+        x_end = interval[1];
+      } else {
+        // start < x_end，需要移除该区间
+        ++count;
+      }
+    }
+    return count;
+  }
 };
