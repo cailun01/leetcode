@@ -1,32 +1,85 @@
 #include "headers.h"
-// 遍历一次
-// https://leetcode-cn.com/problems/valid-sudoku/solution/you-xiao-de-shu-du-by-leetcode/
+/* 36 有效的数独
+请你判断一个 9x9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。
+
+数字 1-9 在每一行只能出现一次。
+数字 1-9 在每一列只能出现一次。
+数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。（请参考示例图）
+数独部分空格内已填入了数字，空白格用 '.' 表示。
+
+注意：
+
+一个有效的数独（部分已被填充）不一定是可解的。
+只需要根据以上规则，验证已经填入的数字是否有效即可。
+
+示例1：
+输入：board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+输出：true
+
+示例 2：
+输入：board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+输出：false
+解释：除了第一行的第一个数字从 5 改为 8 以外，空格内其他数字均与 示例1 相同。 
+但由于位于左上角的 3x3 宫内有两个 8 存在, 因此这个数独是无效的。
+*/
+
+/* 遍历一次
+现在，我们完成了这个算法的所有准备工作：
+
+遍历数独。
+检查看到每个单元格值是否已经在当前的行 / 列 / 子数独中出现过：
+如果出现重复，返回 false。
+如果没有，则保留此值以进行进一步跟踪。
+返回 true。
+https://leetcode-cn.com/problems/valid-sudoku/solution/you-xiao-de-shu-du-by-leetcode/
+*/ 
 class Solution {
 public:
-    bool isValidSudoku(vector<vector<char>>& board) {
-        // 第i行，数字1~9的出现情况, row[i][1]表示
-        vector<vector<int>> row (9, vector<int>(9,0)); 
-        vector<vector<int>> col (9, vector<int>(9,0)); // 第j列，数字1~9的出现情况
-        vector<vector<int>> box (9, vector<int>(9,0)); // 把9*9分为9个3*3的格子
-        
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                if(board[i][j] == '.'){
-                    continue;
-                }
-                // 减'1'使得val比board[i][j]对应的数小1
-                // 使val的值在0~8之间，与row, col, box的第2维索引一一对应
-                int val = board[i][j] - '1'; 
-                int box_index = (i/3) * 3 + j/3;
-                if (row[i][val] == 0 && col[j][val] == 0 && box[box_index][val] == 0) {
-                    row[i][val] = 1;
-                    col[j][val] = 1;
-                    box[box_index][val] = 1;
-                } else {
-                    return false;
-                }
-            }
+  bool isValidSudoku(vector<vector<char>>& board) {
+    // 每一行数字1~9的出现情况，row[1][0]为true，表示第1行，数字1出现过了
+    vector<vector<bool>> row(9, vector<bool>(9, 0)); 
+    // 每一列数字1~9的出现情况，col[1][0]为true，表示第1列，数字1出现过了
+    vector<vector<bool>> col(9, vector<bool>(9, 0));
+    // 把9*9分为9个3*3的子数独，每个子数独中数字1~9的出现情况
+    // 子数独索引换算： (i / 3) * 3 + j / 3;
+    vector<vector<bool>> box(9, vector<bool>(9, 0)); 
+    
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == '.'){
+          continue;
         }
-        return true;
+        // 减'1'使得val比board[i][j]对应的数小1
+        // 使val的值在0~8之间，与row, col, box的第2维索引一一对应
+        int val = board[i][j] - '1'; 
+        // 子数独索引换算
+        int box_index = (i / 3) * 3 + j / 3;
+        if (row[i][val] || col[j][val] || box[box_index][val]) {
+          return false;
+        } 
+        row[i][val] = true;
+        col[j][val] = true;
+        box[box_index][val] = true;
+      }
     }
+    return true;
+  }
 };
