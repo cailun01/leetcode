@@ -12,17 +12,18 @@
 
 class Solution {
 public:
-    int recurse_search_min(vector<int>& nums, int left, int right) {
-      if (nums.at(left) <= nums.at(right)) {
-        return nums.at(left);
-      } else {
-        int mid = (left + right) / 2;
-        return min(recurse_search_min(nums, left, mid),recurse_search_min(nums, mid + 1, right));
-      }
+  int recurse_search_min(vector<int>& nums, int left, int right) {
+    if (nums.at(left) <= nums.at(right)) {
+      return nums.at(left);
+    } else {
+      int mid = (left + right) / 2;
+      return min(recurse_search_min(nums, left, mid),
+                  recurse_search_min(nums, mid + 1, right));
     }
-    int findMin(vector<int>& nums) {
-        return recurse_search_min(nums, 0, nums.size() - 1);
-    }
+  }
+  int findMin(vector<int>& nums) {
+      return recurse_search_min(nums, 0, nums.size() - 1);
+  }
 };
 
 // https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/lan-ren-di-gui-yu-er-fen-sou-suo-by-user5707f/

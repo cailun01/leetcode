@@ -25,24 +25,24 @@ nums 中，除某个元素仅出现 一次 外，其余每个元素都恰出现 
 /*暴力解法*/
 class Solution {
 public:
-    // key: 数组中的数字；value：出现的次数
-    unordered_map<int, int> num_occurence;
-    int singleNumber(vector<int>& nums) {
-        for (const auto& num : nums) {
-            if (num_occurence.find(num) == num_occurence.end()) {
-                num_occurence[num] = 1;
-            } else {
-                num_occurence[num]++;
-            }
-        }
-
-        int res;
-        for (const auto& pair : num_occurence) {
-            if (pair.second == 1) {
-                res = pair.first;
-                break;
-            }
-        }
-        return res;
+  // key: 数组中的数字；value：出现的次数
+  unordered_map<int, int> num_occurence;
+  int singleNumber(vector<int>& nums) {
+    for (const auto& num : nums) {
+      if (num_occurence.find(num) == num_occurence.end()) {
+        num_occurence[num] = 1;
+      } else {
+        num_occurence[num]++;
+      }
     }
+
+    int res;
+    for (const auto& pair : num_occurence) {
+      if (pair.second == 1) {
+        res = pair.first;
+        break;
+      }
+    }
+    return res;
+  }
 };
