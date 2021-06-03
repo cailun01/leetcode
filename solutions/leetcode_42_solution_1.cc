@@ -10,7 +10,9 @@
 
 输入：height = [4,2,0,3,2,5]
 输出：9
+*/
 
+/*
 位置i能达到的水柱高度和其左边的最高柱子、右边的最高柱子有关，我们分别称这两个柱子高度为l_max和r_max；
 位置 i 最大的水柱高度就是min(l_max, r_max)。
 
@@ -46,7 +48,7 @@ public:
     for (int i = n - 2; i >= 0; i--) {
       r_max[i] = max(height[i], r_max[i + 1]);
     }
-    // 计算答案
+    // 计算答案，从[1, n-1]
     for (int i = 1; i < n - 1; i++) {
       res += min(l_max[i], r_max[i]) - height[i];
     }
