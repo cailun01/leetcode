@@ -39,44 +39,46 @@ arr 中的所有整数互不相同（即，arr 是从 1 到 arr.length 整数的
 
 class Solution {
 public:
-    // 记录翻转操作序列
-    vector<int> record;
+  // 记录翻转操作序列
+  vector<int> record;
 
-    void reverse(vector<int>& arr, int i, int j) {
-        while (i < j) {
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-            i++; j--;
-        }
+  void reverse(vector<int>& arr, int i, int j) {
+    while (i < j) {
+      int temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+      i++; 
+      j--;
+    }
+  }
+
+  void sort(vector<int>& arr, int n) {
+    if (n == 1) {
+      return;
     }
 
-    void sort(vector<int>& arr, int n) {
-        if (n == 1) {
-            return;
-        }
-
-        // 寻找最大饼的索引
-        int max_cake = 0;
-        int max_cake_idx = 0;
-        for (int i = 0; i < n; i++) {
-            if (arr[i] > max_cake) {
-                max_cake = arr[i];
-                max_cake_idx = i;
-            }
-        }
-        // 第一次翻转，将最大饼翻到最上面
-        reverse(arr, 0, max_cake_idx);
-        record.push_back(max_cake_idx + 1);
-        // 第二次翻转，将最大饼翻到最下面
-        reverse(arr, 0, n - 1);
-        record.push_back(n);
-        // 递归调用
-        sort(arr, n - 1);
+    // 寻找最大饼的索引
+    int max_cake = 0;
+    int max_cake_idx = 0;
+    for (int i = 0; i < n; i++) {
+      if (arr[i] > max_cake) {
+        max_cake = arr[i];
+        max_cake_idx = i;
+      }
     }
+    // 第一次翻转，将最大饼翻到最上面
+    reverse(arr, 0, max_cake_idx);
+    record.push_back(max_cake_idx + 1);
+    // 第二次翻转，将最大饼翻到最下面
+    reverse(arr, 0, n - 1);
+    record.push_back(n);
+    // 递归调用
+    sort(arr, n - 1);
+  }
 
-    vector<int> pancakeSort(vector<int>& arr) {
-        sort(arr, arr.size());
-        return record;
-    }
+  vector<int> pancakeSort(vector<int>& arr) {
+    // 这个sort是自定义的，不是std::sort
+    sort(arr, arr.size());
+    return record;
+  }
 };
