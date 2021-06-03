@@ -1,4 +1,4 @@
-/*
+/* 42 接雨水
 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
 
 示例 1：
@@ -44,11 +44,11 @@ public:
     }
     // 从右向左计算 r_max
     for (int i = n - 2; i >= 0; i--) {
-        r_max[i] = max(height[i], r_max[i + 1]);
+      r_max[i] = max(height[i], r_max[i + 1]);
     }
     // 计算答案
     for (int i = 1; i < n - 1; i++) {
-        res += min(l_max[i], r_max[i]) - height[i];
+      res += min(l_max[i], r_max[i]) - height[i];
     }
     return res;
   }
