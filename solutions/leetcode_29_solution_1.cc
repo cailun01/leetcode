@@ -1,7 +1,6 @@
 class Solution {
 public:
-  int subDivide(int dividend, int divisor, bool negative)
-  {
+  int subDivide(int dividend, int divisor, bool negative) {
     int i = 0, times = 1;
     int originDivisor = divisor;
     while (dividend <= divisor && dividend <= 0) {
@@ -24,8 +23,7 @@ public:
     } else {
       if (negative) {
         return -i + subDivide(dividend, originDivisor, negative);
-      }
-      else {
+      } else {
         return i + subDivide(dividend, originDivisor, negative);
       }
     }
@@ -36,12 +34,13 @@ public:
     bool negative = false;
     
     if (dividend == INT_MIN) {
-      if (divisor == -1)
+      if (divisor == -1) {
         return INT_MAX;
-      else if (divisor == 1)
+      } else if (divisor == 1) {
         return INT_MIN;
-      else if (divisor == INT_MIN)
+      } else if (divisor == INT_MIN) {
         return 1;
+      }
     }
     if (divisor == INT_MIN) {
       return 0;
@@ -66,7 +65,6 @@ public:
        divisor = -divisor;
       dividend = -dividend;                        
     }
-
     return subDivide(dividend, divisor, negative);
   }
 };
