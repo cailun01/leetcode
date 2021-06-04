@@ -22,18 +22,24 @@ public:
     int n = nums.size();
     int duplicate = -1;
     for (int i = 0; i < n; ++i) {
+      // abs(nums[i])的取值范围是[1...N]
+      // 索引index应该从 0 开始
       int index = abs(nums[i]) - 1;
       if (nums[index] < 0) {
+        // nums[index] < 0说明这个index对应的值已被访问过，
+        // 是重复的
         duplicate = abs(nums[i]);
       } else {
         nums[index] *= -1;
       }
     }
 
-    int missing = -1;
     for (int i = 0; i < n; i++) {
       if (nums[i] > 0) {
-        missing = i + 1;
+        // nums[i] 大于 0 则说明没有访问
+        // 如果nums[i]的取值范围是[0...N-1]，则missing=i
+        // 但是nums[i]的取值范围是[1...N]，则missing=i+1
+        int missing = i + 1;
       }
     }
     return {duplicate, missing};

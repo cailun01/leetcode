@@ -1,4 +1,3 @@
-#include "headers.h"
 /* 28. 实现 strStr()
 实现 strStr() 函数。
 
@@ -17,30 +16,22 @@
 对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
 */
 
-// KMP算法
+
+// 暴力解法
 class Solution {
 public:
   int strStr(string haystack, string needle) {
-    if(needle.size() == 0) return 0;
-    if(haystack.size() == 0) return -1;
-    // 根据needle，构建next数组
-    int j = -1, i = 0;//j在后面，i在前面
-    vector<int> next(needle.size() + 1);
-    next[0] = j;
-    while(i < needle.size()) {
-      while(j >= 0 && needle[i] != needle[j]) {
-        j = next[j];
-      }
-      i++, j++;
-      next[i] = j;
+    int n_length = needle.size();
+    int h_length = haystack.size();
+    if (n_length == 0 && h_length == 0) {
+      return 0;
     }
-    
-    j = 0, i = 0; //j这回是text的， i是pattern的
-    while(j < haystack.size()) {
-      while(i >= 0 && needle[i] != haystack[j]) i = next[i];
-      i++, j++;
-      if(i == needle.size()) {
-          return j - needle.size();
+    if (h_length < n_length) {
+      return -1;
+    }
+    for (int i = 0; i < h_length - n_length + 1; ++i) {
+      if (haystack.substr(i, n_length) == needle) {
+        return i;
       }
     }
     return -1;

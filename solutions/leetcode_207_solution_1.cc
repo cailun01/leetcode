@@ -24,9 +24,9 @@ public:
     // 加入拓扑排序的顶点数
     int num = 0;
     for (int i = 0; i < prerequisites.size(); i++) {
-      //入顶点
+      // prerequisites[i][0]表示该课程需要依赖其他课程，记录课程的入度
       in_degrees[prerequisites[i][0]]++;
-      //出顶点
+      // 出顶点
       adjacents[prerequisites[i][1]].push_back(prerequisites[i][0]);
     }
 

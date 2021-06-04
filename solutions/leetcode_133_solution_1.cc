@@ -18,7 +18,11 @@ class Node {
 给定节点将始终是图中的第一个节点（值为 1）。你必须将 给定节点的拷贝 作为对克隆图的引用返回。
 */
 
-// bfs
+/* bfs
+使用广度优先搜索。用unoredred<Node*,Node*> visited记录已经被克隆的节点，key是原节点，value是克隆节点。
+对于节点node，对它克隆，并在visited标记。将node放入队列，当队列不为空时，出队首节点n，找到所有n的邻接节点neighbor，
+如果neighbor已在visited中，说明已经创建了neighbor的克隆节点。在visited中访问n的克隆节点visited[n]，并为克隆节点的邻接表添加元素。
+*/
 class Solution {
 private:
 // 使用一个unordered_map存储所有已被访问和复制的节点。unordered_map中的 key 是原始图中的节点，
