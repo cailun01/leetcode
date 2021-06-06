@@ -1,28 +1,55 @@
+
+/* 方法一：递归
+https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/fu-xue-ming-zhu-di-gui-die-dai-yi-pian-t-wy0h/
+链表和树的问题，一般都可以有递归和迭代两种写法。对于本题一定记住是有序链表，值相同的节点会在一起。
+
+1.1 递归函数定义
+递归最基本的是要明白递归函数的定义！ 我反复强调过这一点。
+
+递归函数直接使用题目给出的函数 deleteDuplicates(head) ，它的含义是 删除以 head 作为开头的有序链表中，值出现重复的节点。
+
+1.2 递归终止条件
+终止条件就是能想到的基本的、不用继续递归处理的case。
+
+如果 head 为空，那么肯定没有值出现重复的节点，直接返回 head；
+如果 head.next 为空，那么说明链表中只有一个节点，也没有值出现重复的节点，也直接返回 head。
+1.3 递归调用
+什么时候需要递归呢？我们想一下这两种情况：
+1.3.1
+如果 head.val != head.next.val ，说明头节点的值不等于下一个节点的值，所以当前的 head 节点必须保留；
+但是 head.next 节点要不要保留呢？我们还不知道，需要对 head.next 进行递归，即对 head.next 作为头节点的链表，
+去除值重复的节点。所以 head.next = self.deleteDuplicates(head.next).
+1.3.2
+如果 head.val == head.next.val ，说明头节点的值等于下一个节点的值，所以当前的 head 节点必须删除，
+并且 head 之后所有与 head.val 相等的节点也都需要删除；删除到哪个节点为止呢？
+需要用 move 指针一直向后遍历寻找到与 head.val 不等的节点。此时 move 之前的节点都不保留了，
+因此返回 deleteDuplicates(move);
+
+1.4 返回结果
+题目让我们返回删除了值重复的节点后剩余的链表，结合上面两种递归调用的情况。
+
+如果 head.val != head.next.val ，头结点需要保留，因此返回的是 head；
+如果 head.val == head.next.val ，头结点需要删除，需要返回的是deleteDuplicates(move);。
+对链表 1 -> 2 -> 2 -> 3 递归的过程如下。
+
+
+*/
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        if(!head || !head->next) return head;
-        ListNode *dummyhead = new ListNode(INT_MAX);
-        dummyhead -> next = head;
-        ListNode *prev = dummyhead;
-        while(prev && prev->next)
-        {
-            ListNode *curr = prev -> next;
-            // 如果curr到最后一位了或者当前curr所指元素没有重复值
-            if(!curr->next || curr->next->val != curr->val) prev = curr;
-            else
-            {
-                // 将curr定位到一串重复元素的最后一位
-                while(curr->next && curr->next->val == curr->val) curr = curr -> next;
-                // prev->next跳过中间所有的重复元素
-                prev -> next = curr -> next;
-            }  
+      if (!head || !head->next) {
+        return head;
+      }
+      if (head->val != head->next->val) {
+        head->next = deleteDuplicates(head->next);
+      } else {
+        ListNode* move = head->next;
+        while (move && head->val == move->val) {
+          move = move->next;
         }
-        return dummyhead -> next;
+        return deleteDuplicates(move);
+      }
+      return head;
     }
 };
 
-作者：superkakayong
-链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/zi-jie-ti-ku-82-zhong-deng-shan-chu-pai-xu-lian-bi/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
