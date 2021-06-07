@@ -52,7 +52,9 @@
     "xlocale": "cpp",
     "xhash": "cpp",
     "queue": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp"
   },
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
