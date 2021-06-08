@@ -8,10 +8,9 @@
 “字符” 用于判断是否匹配：匹配则弹出，不匹配则入栈
 “下标” 用于计算当前有效长度：匹配并弹出后，与新的栈顶的“下标”求差
 “下标-1” 用于初始化，便于后续求差
-作者：bei-ji-xiong-d
+
 链接：https://leetcode-cn.com/problems/longest-valid-parentheses/solution/czhan-zhi-guan-yi-dong-de-chu-ru-zhan-tu-wcx9/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 */
 class Solution {
 public:
