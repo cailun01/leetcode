@@ -39,3 +39,4 @@ def solved_questions():
 
 if __name__ == "__main__":
     _, num_solved_questions = solved_questions()
+    print(num_solved_questions)
