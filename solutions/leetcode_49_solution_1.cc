@@ -24,10 +24,12 @@
 由于互为字母异位词的两个字符串包含的字母相同，因此两个字符串中的相同字母出现的次数一定是相同的，
 可以将每个字母出现的次数使用字符串表示，作为哈希表的键。
 */
+
 class Solution {
+public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
       vector<vector<string>> res;
-      unordered<string, vector<string>> map;
+      unordered_map<string, vector<string>> map;
 
       // 统计string的各字母频次,以频次为key直接加入队列
       for (auto s : strs) {
