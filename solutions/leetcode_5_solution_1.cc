@@ -1,40 +1,45 @@
 #include "headers.h"
-// 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
-// 示例 1：
-// 输入: "babad"
-// 输出: "bab"
-// 注意: "aba" 也是一个有效答案。
+/* 5 最长回文子串
+给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
 
-// 示例 2：
-// 输入: "cbbd"
-// 输出: "bb"
+示例 1：
+输入: "babad"
+输出: "bab"
+注意: "aba" 也是一个有效答案。
 
-// 动态规划
-// https://leetcode-cn.com/problems/longest-palindromic-substring/solution/c-jian-ji-hao-li-jie-de-dong-tai-gui-hua-by-mei-yo/
+示例 2：
+输入: "cbbd"
+输出: "bb"
+*/
 
-// 注意，本题的要求是返回最长回文子串，而不是求最长回文子串的长度
+// 中心扩展法
+// 中心扩展就是把给定的字符串的每一个字母当做中心，向两边扩展，这样来找最长的子回文串。算法复杂度为O(N^2)。
+// 需要考虑两种情况：
+// 长度为奇数的回文串，比如a, aba, abcba
+// 长度为偶数的回文串，比如aa, abba
+
 class Solution {
 public:
-  string longestPalindrome(string s) {
-    int n = s.size();
-    string res = "";
-    int l = 0;  //l用来记录当前最长的回文子串
-    if (s.size() == 0) return res;
-    if (s.size() == 1) return s;
-    res = s[0];  //返回子串初始化为第一个元素
-    // dp[i][j] 表示s[i]至s[j]表示的子串是否为回文子串，是为true，不是为false
-    vector<vector<bool>> dp(n, vector<bool>(n));
-    for (int j = 0; j < n; j++) {
-      for (int i = j; i >= 0; i--){
-        if ((s[i] == s[j]) && (j - i <= 2 || dp[i + 1][j - 1])) { 
-          // j-i<=2相当于j-1<=i+1，如果成立，此时右指针j-1指向的数会在左指针i+1的左边
-          dp[i][j] = true;
-          if (j - i > l){
-            res = s.substr(i, j - i + 1);
-            l = j - i;
-          }
-        }
-      }
+  string palindrome(string& s, int l, int r) {
+    // 防止索引越界
+    while (l >= 0 && r < s.size() && s[l] == s[r]) {
+      // 向两边展开
+      l--; r++;
+    }
+    // 此时l指向回文子串的左侧，r指向回文子串的右侧(s[l]!=s[r])
+    return s.substr(l + 1, r - l - 1);
+  }
+
+  string longestPalindrome(string &s) {
+    string res;
+    for (int i = 0; i < s.size(); ++i) {
+      // 以s[i]为中心的最长回文子串
+      string s1 = palindrome(s, i, i);
+      // 以s[i]和s[i+1]为中心的最长回文子串
+      string s2 = palindrome(s, i, i + 1);
+      // res = longest(res, s1, s2);
+      res = res.size() > s1.size() ? res : s1;
+      res = res.size() > s2.size() ? res : s2;
     }
     return res;
   }
