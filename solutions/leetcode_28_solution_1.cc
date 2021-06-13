@@ -35,12 +35,14 @@ public:
       next[i] = j;
     }
     
-    j = 0, i = 0; //j这回是text的， i是pattern的
+    j = 0, i = 0; //j这回是haystack的， i是needle的
     while(j < haystack.size()) {
-      while(i >= 0 && needle[i] != haystack[j]) i = next[i];
+      while(i >= 0 && needle[i] != haystack[j]) { 
+        i = next[i]; 
+      }
       i++, j++;
       if(i == needle.size()) {
-          return j - needle.size();
+        return j - needle.size();
       }
     }
     return -1;

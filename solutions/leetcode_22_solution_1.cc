@@ -37,7 +37,8 @@ public:
   }
   // 对于n对括号，有n个左括号，n个右括号。left_parentheses和right_parentheses表示
   // 回溯过程中，剩下的可用的左、右括号的数目
-  void backtrack(int left_parentheses, int right_parentheses, string s, vector<string>& result) {
+  void backtrack(int left_parentheses, int right_parentheses, 
+                 string s, vector<string>& result) {
     // 数量小于 0 肯定是不合法的
     if (left_parentheses < 0 || right_parentheses < 0) {
       return;
