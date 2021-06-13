@@ -14,44 +14,44 @@ k 是一个正整数，它的值小于或等于链表的长度。
 
 class Solution {
 public:
+  /* 反转区间 [a, b) 的元素，注意是左闭右开 */
+  ListNode* reverse(ListNode* a, ListNode* b) {
+    ListNode* pre = nullptr;
+    ListNode* cur = a;
+    ListNode* nxt = a;
 
-    /* 反转区间 [a, b) 的元素，注意是左闭右开 */
-    ListNode* reverse(ListNode* a, ListNode* b) {
-      ListNode* pre = nullptr;
-      ListNode* cur = a;
-      ListNode* nxt = a;
+    while (cur != b) {
+      // 逐个结点反转
+      nxt = cur->next;
+      cur->next = pre;
+      // 更新指针位置
+      pre = cur;
+      cur = nxt;
+    }
+    // 返回反转后的头结点
+    return pre;
+  }
 
-      while (cur != b) {
-        // 逐个结点反转
-        nxt = cur->next;
-        cur->next = pre;
-        // 更新指针位置
-        pre = cur;
-        cur = nxt;
-      }
-      // 返回反转后的头结点
-      return pre;
+  ListNode* reverseKGroup(ListNode* head, int k) {
+    if (!head) {
+      return nullptr;
     }
 
-    ListNode* reverseKGroup(ListNode* head, int k) {
-      if (!head) {
-        return nullptr;
+    ListNode* a = head;
+    ListNode* b = head;
+    for (int i = 0; i < k; ++i) {
+      // 不足 k 个，不需要反转，base case
+      if (!b) {
+        return head;
       }
-
-      ListNode* a = head;
-      ListNode* b = head;
-      for (int i = 0; i < k; ++i) {
-        // 不足 k 个，不需要反转，base case
-        if (!b) {
-          return head;
-        }
-        b = b->next;
-      }
-      ListNode* new_head = reverse(a, b);
-      // 反转了k个元素后，b指向第k+1个元素
-      a->next = reverseKGroup(b, k);
-      return new_head;
+      b = b->next;
     }
+    // b指向第k+1个元素，反转左闭右开集合[a, b)之间的节点
+    ListNode* new_head = reverse(a, b);
+    // 反转了k个元素后，b指向第k+1个元素
+    a->next = reverseKGroup(b, k);
+    return new_head;
+  }
 };
 
 // 用迭代方式解决
