@@ -22,8 +22,13 @@ public:
     if (N == 0) {
       return 1.0;
     }
-    double y = quickMul(x, N / 2);
-    return N % 2 == 0 ? y * y : y * y * x;
+
+    if (N % 2 == 0) {
+      double sub = quickMul(x, N / 2);
+      return sub * sub;
+    } else {
+      return x * quickMul(x, N - 1);
+    }
   }
 
   double myPow(double x, int n) {
