@@ -30,58 +30,60 @@
 
 class Codec {
 public:
-    void serialize(TreeNode* root, string& serialized_str) {
-        if (!root) {
-            serialized_str.push_back('#');
-            serialized_str.push_back(',');
-            return; 
-        }
-        serialized_str += to_string(root->val);
-        serialized_str.push_back(',');
-        serialize(root->left, serialized_str);
-        serialize(root->right, serialized_str);
-        return;
+  void serialize(TreeNode* root, string& serialized_str) {
+    if (!root) {
+      // 用#代表空指针，用,分隔开
+      serialized_str.push_back('#');
+      serialized_str.push_back(',');
+      return; 
+    }
+    serialized_str += to_string(root->val);
+    serialized_str.push_back(',');
+    serialize(root->left, serialized_str);
+    serialize(root->right, serialized_str);
+    return;
+  }
+
+  // Encodes a tree to a single string.
+  string serialize(TreeNode* root) {
+    string str("");
+    serialize(root, str);
+    return str;
+  }
+
+  std::vector<std::string> split(const std::string& s, const char& delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter)) {
+      tokens.emplace_back(token);
+    }
+    return tokens;
+  }
+
+  TreeNode* deserialize(list<string>& nodes) {
+    if (nodes.empty()) {
+      return nullptr;
     }
 
-    // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
-        string str("");
-        serialize(root, str);
-        return str;
+    string first = nodes.front();
+    nodes.pop_front();
+    if (first == "#") {
+      return nullptr;
     }
+    TreeNode* root = new TreeNode(stoi(first));
+    root->left = deserialize(nodes);
+    root->right = deserialize(nodes);
+    return root;
+  }
 
-    std::vector<std::string> split(const std::string& s, const char& delimiter) {
-        std::vector<std::string> tokens;
-        std::string token;
-        std::istringstream tokenStream(s);
-        while (std::getline(tokenStream, token, delimiter)) {
-            tokens.emplace_back(token);
-        }
-        return tokens;
+  // Decodes your encoded data to tree.
+  TreeNode* deserialize(string data) {
+    list<string> nodes;
+    // 按照逗号,分割字符串
+    for (auto s : split(data, ',')) {
+      nodes.push_back(s);
     }
-
-    TreeNode* deserialize(list<string>& nodes) {
-        if (nodes.empty()) {
-            return nullptr;
-        }
-
-        string first = nodes.front();
-        nodes.pop_front();
-        if (first == "#") {
-            return nullptr;
-        }
-        TreeNode* root = new TreeNode(stoi(first));
-        root->left = deserialize(nodes);
-        root->right = deserialize(nodes);
-        return root;
-    }
-
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-        list<string> nodes;
-        for (auto s : split(data, ',')) {
-            nodes.push_back(s);
-        }
-        return deserialize(nodes);
-    }
+    return deserialize(nodes);
+  }
 };
