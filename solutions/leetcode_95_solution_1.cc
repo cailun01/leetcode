@@ -29,24 +29,29 @@ https://leetcode-cn.com/problems/unique-binary-search-trees-ii/solution/jian-dan
 
 class Solution {
 public:
-    vector<TreeNode*> generateTrees(int n) {
-      return generate(1, n);
-    }
+  vector<TreeNode*> generateTrees(int n) {
+    return generate(1, n);
+  }
 
-    vector<TreeNode*> generate(int low, int high) {
-      if(low > high) return vector<TreeNode*>{nullptr};   // 表示只有一种可能：空树
-      vector<TreeNode*> res;
-      for (int mid = low; mid <= high; ++mid) {
-        auto lt = generate(low,  mid-1);    // 左子树的所有可能
-        auto rt = generate(mid+1, high);    // 右子树的所有可能
-        for(auto& left : lt) {
-          for(auto& right : rt) {
-            // 左子树的所有情况 * 右子树的所有情况，即为此树的所有情况
-            res.push_back(new TreeNode(mid, left, right));
-          }
+  vector<TreeNode*> generate(int low, int high) {
+    if (low > high) {
+      // 表示只有一种可能：空树
+      return vector<TreeNode*>{nullptr};   
+    }
+    vector<TreeNode*> res;
+    for (int mid = low; mid <= high; ++mid) {
+      // 左子树的所有可能
+      auto lt = generate(low,  mid - 1);
+      // 右子树的所有可能
+      auto rt = generate(mid + 1, high);
+      for (auto& left : lt) {
+        for (auto& right : rt) {
+          // 左子树的所有情况 * 右子树的所有情况，即为此树的所有情况
+          res.push_back(new TreeNode(mid, left, right));
         }
       }
-      return res;
     }
+    return res;
+  }
 };
 
