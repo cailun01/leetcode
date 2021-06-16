@@ -1,4 +1,4 @@
-/*
+/* 538. 把二叉搜索树转换为累加树
 给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），
 使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
 
@@ -12,22 +12,22 @@
 
 class Solution {
 private:
-    int sum = 0;
+  int sum = 0;
 public:
-    void traverse(TreeNode* root) {
-        if (!root) {
-            return;
-        }
-        traverse(root->right);
-        // 维护累加和
-        sum += root->val;
-        // 将 BST 转化成累加树
-        root->val = sum;
-        traverse(root->left);
+  void traverse(TreeNode* root) {
+    if (!root) {
+      return;
     }
-    
-    TreeNode* convertBST(TreeNode* root) {
-        traverse(root);
-        return root;
-    }
+    traverse(root->right);
+    // 维护累加和
+    sum += root->val;
+    // 将 BST 转化成累加树
+    root->val = sum;
+    traverse(root->left);
+  }
+  
+  TreeNode* convertBST(TreeNode* root) {
+    traverse(root);
+    return root;
+  }
 };
