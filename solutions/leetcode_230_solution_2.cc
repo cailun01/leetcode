@@ -3,23 +3,23 @@
 // 迭代
 class Solution {
 public:
-    int kthSmallest(TreeNode* root, int k) {
-      if (!root) return {};
-      stack<TreeNode*> node_stack;
-      vector<int> vec;
-      do {
-        while (root != nullptr) {
-          // 把root、以及root左孩子都压入栈中
-          node_stack.push(root);
-          root = root->left;
-        }
-        if (!node_stack.empty()) {
-          TreeNode* node = node_stack.top();
-          node_stack.pop();
-          vec.push_back(node->val);
-          root = node->right;
-        }
-      } while (root != nullptr || !node_stack.empty());
-        return vec.at(k - 1);
+  int kthSmallest(TreeNode* root, int k) {
+    TreeNode* cur = root;
+    stack<TreeNode*> stk;
+    int num = 0;
+    while (!stk.empty() || cur) {
+      while (cur) {
+        stk.push(cur);
+        cur = cur->left;
+      }
+      cur = stk.top();
+      stk.pop();
+      num++;
+      if (num == k) {
+        return cur->val;
+      }
+      cur = cur->right;
     }
+    return 0;
+  }
 };
