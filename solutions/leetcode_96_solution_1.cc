@@ -17,7 +17,7 @@
 class Solution {
 public:
   int numTrees(int n) {
-    // 用连续的 i 个数，所构建出的 BST 种类数
+    // dp[i]: 用连续的 i 个数，所构建出的 BST 种类数
     vector<int> dp(n + 1); 
     dp[0] = dp[1] = 1;//初始化
     dfs(n, dp);
@@ -30,8 +30,9 @@ public:
       return dp[n];
     }
     int ans = 0;
-	  for (int i = 1; i <= n; i++) {
-      ans += dfs(i-1, dp) * dfs(n-i, dp);//递归
+	  for (int j = 0; j < n; j++) {
+      // 左子树用j个节点，右子树用n-j-1个节点，还剩一个数作根节点
+      ans += dfs(j, dp) * dfs(n - j - 1, dp);//递归
 	  }
     dp[n] = ans;//记忆
     return ans;

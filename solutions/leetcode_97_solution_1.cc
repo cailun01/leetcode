@@ -23,9 +23,11 @@ t = t1 + t2 + ... + tm
 */
 
 class Solution {
-  bool DFS(string &s1, string &s2, string &s3, int i, int j, int k, vector<vector<int>>& memory) {
+  bool DFS(string &s1, string &s2, string &s3, 
+           int i/*s1 index*/, int j/*s2 index*/, int k/*s3 index*/, 
+           vector<vector<int>>& memory) {
     if (memory[i][j] != -1) { 
-      return memory[i][j] == 1;
+      return memory[i][j];
     }
     if (k == s3.size()) {
       memory[i][j] = 1;
@@ -33,16 +35,13 @@ class Solution {
     }
     bool res = false;
     if (i < s1.size() && s1[i] == s3[k]) {
-      res = DFS(s1, s2, s3, i+1, j, k+1, memory);
+      res = DFS(s1, s2, s3, i + 1, j, k + 1, memory);
     }
     if (j < s2.size() && s2[j] == s3[k]) {
-      res = res || DFS(s1, s2, s3, i, j+1, k+1, memory);
+      // 注意此处，主要s1或s2匹配上就行。
+      res = res || DFS(s1, s2, s3, i, j + 1, k + 1, memory);
     }
-    if (res){
-      memory[i][j] = 1;
-      } else {
-      memory[i][j] = 0;
-    }
+    memory[i][j] = res ? 1 : 0;
     return res;
   }
 public:
@@ -50,7 +49,10 @@ public:
     if (s1.size() + s2.size() != s3.size()) {
       return false;
     }
+    // memory[i][j] == -1, 未访问过i,j
+    // memory[i][j] == 0, 访问过i,j, false
+    // memory[i][j] == 1, 访问过i,j, true
     vector<vector<int>> memory(s1.size() + 1, vector<int>(s2.size() + 1, -1));
-    return DFS(s1, s2, s3, 0, 0, 0, memory);
+    return DFS(s1, s2, s3, 0/*s1 index*/, 0/*s2 index*/, 0/*s3 index*/, memory);
   }
 };

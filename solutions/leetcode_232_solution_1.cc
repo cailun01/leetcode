@@ -1,4 +1,4 @@
-/*
+/* 232 用栈实现队列
 请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（push、pop、peek、empty）：
 
 实现 MyQueue 类：
@@ -39,40 +39,40 @@ myQueue.empty(); // return false
 
 class MyQueue {
 private:
-    stack<int> s1, s2;
+  stack<int> s1, s2;
 public:
-    /** Initialize your data structure here. */
-    MyQueue() {
+  /** Initialize your data structure here. */
+  MyQueue() {
 
-    }
+  }
     
-    /** Push element x to the back of queue. */
-    void push(int x) {
-        s1.push(x);
-    }
+  /** Push element x to the back of queue. */
+  void push(int x) {
+    s1.push(x);
+  }
     
-    /** Removes the element from in front of queue and returns that element. */
-    int pop() {
-        int top_elem = peek();
-        s2.pop();
-        return top_elem;
-    }
+  /** Removes the element from in front of queue and returns that element. */
+  int pop() {
+    int top_elem = peek();
+    s2.pop();
+    return top_elem;
+  }
     
-    /** Get the front element. */
-    int peek() {
-        if (s2.empty()) {
-            while (!s1.empty()) {
-                s2.push(s1.top());
-                s1.pop();
-            }
-        }
-        return s2.top();
+  /** Get the front element. */
+  int peek() {
+    if (s2.empty()) {
+      while (!s1.empty()) {
+        s2.push(s1.top());
+        s1.pop();
+      }
     }
+    return s2.top();
+  }
     
-    /** Returns whether the queue is empty. */
-    bool empty() {
-        return s1.empty() && s2.empty();
-    }
+  /** Returns whether the queue is empty. */
+  bool empty() {
+    return s1.empty() && s2.empty();
+  }
 };
 
 /**
