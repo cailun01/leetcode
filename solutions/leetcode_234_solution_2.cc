@@ -35,7 +35,7 @@ public:
   }
   bool isPalindrome(ListNode* head) {
     // 快慢指针，slow指向链表中间的位置
-    // 如果链表个数时奇数，slow指向中间节点，如果是偶数，指向中间偏右的节点。
+    // 如果链表个数是奇数，slow指向中间节点，如果是偶数，指向中间偏右的节点。
     ListNode* slow = head;
     ListNode* fast = head;
     while (fast != nullptr && fast->next != nullptr) {

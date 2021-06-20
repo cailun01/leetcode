@@ -1,5 +1,5 @@
 #include "headers.h"
-/* 
+/* 912 排序数组
 插入排序
 
 将待排序元素一个个插入初始已有序部分的过程，而插入位置的选择遵循了使插入后仍然保持有序的原则。
@@ -15,22 +15,25 @@
 说明也不需要和15前面的数据比较了，因为前面的数据都是有序的。
 
 3.重复步骤2，一直到数据全都排完。
-
-
 */
+
 class Solution {
 public:
-    vector<int> sortArray(vector<int>& nums) {
-        int size = nums.size();
-        for (int i = 1; i < size; ++i) { // 进行n-1趟排序
-            int j = i;
-            int temp = nums[j]; // temp临时存放nums[i]，j从i开始向前枚举
-            while (j > 0 && temp < nums[j - 1]) { // 只要temp小于前一个元素nums[j - 1]
-                nums[j] = nums[j - 1]; // 把nums[j - 1]后移一位至nums[j]
-                --j;
-            }
-            nums[j] = temp; // 插入位置为j
-        }
-        return nums;
+  vector<int> sortArray(vector<int>& nums) {
+    int size = nums.size();
+    // 进行n-1趟排序
+    for (int i = 1; i < size; ++i) { 
+      int j = i;
+      // temp临时存放nums[i]，j从i开始向前枚举
+      int temp = nums[j]; 
+      // 只要temp小于前一个元素nums[j - 1]
+      while (j > 0 && temp < nums[j - 1]) {
+        // 把nums[j - 1]后移一位至nums[j]
+        nums[j] = nums[j - 1]; 
+        --j;
+      }
+      nums[j] = temp; // 插入位置为j
     }
+    return nums;
+  }
 };

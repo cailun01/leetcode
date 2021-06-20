@@ -1,13 +1,14 @@
 #include "headers.h"
-/* 
+/* 912 排序数组
 快速排序
 
 快速排序的主要思想是通过划分将待排序的序列分成前后两部分，其中前一部分的数据都比后一部分的数据要小，
 然后再递归调用函数对两部分的序列分别进行快速排序，以此使整个序列达到有序。
 
 我们定义函数 randomized_quicksort(nums, left, right) 为对 nums 数组里[left, right]的部分进行排序，
-每次先调用 randomized_partition 函数对 nums 数组里 [l,r] 的部分进行划分，并返回分界值的下标 pos，
-然后按上述将的递归调用 randomized_quicksort(nums, l, pos - 1) 和 randomized_quicksort(nums, pos + 1, r) 即可。
+每次先调用 randomized_partition 函数对 nums 数组里 [l,r] 的部分进行划分，并返回分界值的下标pos
+然后按上述将的递归调用 randomized_quicksort(nums, l, pos - 1) 和 
+randomized_quicksort(nums, pos + 1, r) 即可。
 
 partition 函数的思路：
 (1) 先将A[left]存至某个临时变量pivot，并令两个下标left和right
@@ -50,8 +51,8 @@ public:
       }
       nums[right] = nums[left];
     }
-    // 此时left == right
-    nums[left] = pivot; // 把pivot放到left与right相遇的地方
+    // 此时left == right, 把pivot放到left与right相遇的地方
+    nums[left] = pivot;
     return left;
   }
 
