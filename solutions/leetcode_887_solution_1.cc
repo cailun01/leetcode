@@ -1,4 +1,4 @@
-/*
+/* 887 鸡蛋掉落
 给你 k 枚相同的鸡蛋，并可以使用一栋从第 1 层到第 n 层共有 n 层楼的建筑。
 已知存在楼层 f ，满足 0 <= f <= n ，任何从 高于 f 的楼层落下的鸡蛋都会碎，
 从 f 楼层或比它低的楼层落下的鸡蛋都不会破。
@@ -26,29 +26,32 @@
 
 class Solution {
 public:
-    int superEggDrop(int K, int N) {
-        vector<vector<int>> memo(K + 1, vector<int>(N + 1, -1));
-        return dp(K, N, memo);
+  int superEggDrop(int K, int N) {
+    vector<vector<int>> memo(K + 1, vector<int>(N + 1, -1));
+    return dp(K, N, memo);
+  }
+  // 当前状态为 K 个鸡蛋，面对 N 层楼（这里N不表示高度）
+  int dp(int K, int N, vector<vector<int>>& memo) {
+    if (K == 1) return N;
+    if (N == 0) return 0;
+    if (memo[K][N] != -1) { 
+      return memo[K][N]; 
     }
-    int dp(int K, int N, vector<vector<int>>& memo) {
-        if (K == 1) return N;
-        if (N == 0) return 0;
-        if (memo[K][N] != -1) return memo[K][N];
-        int res = numeric_limits<int>::max();
-        int low = 1, high = N;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            int broken = dp(K - 1, mid - 1, memo); // 单调递增
-            int not_broken = dp(K, N - mid, memo); // 单调递减
-            if (broken > not_broken) {
-                high = mid - 1;
-                res = min(res, broken + 1); // + 1指的是在第 i 楼扔了一次
-            } else {
-                low = mid + 1;
-                res = min(res, not_broken + 1);
-            }
-        }
-        memo[K][N] = res;
-        return res;
+    int res = numeric_limits<int>::max();
+    int low = 1, high = N;
+    while (low <= high) {
+      int mid = (low + high) / 2;
+      int broken = dp(K - 1, mid - 1, memo); // 单调递增
+      int not_broken = dp(K, N - mid, memo); // 单调递减
+      if (broken > not_broken) {
+        high = mid - 1;
+        res = min(res, broken + 1); // + 1指的是在第 i 楼扔了一次
+      } else {
+        low = mid + 1;
+        res = min(res, not_broken + 1);
+      }
     }
+    memo[K][N] = res;
+    return res;
+  }
 };

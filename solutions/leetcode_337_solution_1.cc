@@ -35,22 +35,24 @@
 
 class Solution {
 public:
-    int rob(TreeNode* root) {
-        if (!root) return 0;
-        if (memo.find(root) != memo.end()) {
-            return memo[root];
-        }
-        int do_rob = root->val + (
-            // 左子树
-            (root->left == nullptr ? 0 : rob(root->left->left) + rob(root->left->right)) + 
-            // 右子树
-            (root->right == nullptr ? 0 : rob(root->right->left) + rob(root->right->right))
-        );
-        int donot_rob = rob(root->left) + rob(root->right);
-        int res = max(do_rob, donot_rob);
-        memo[root] = res;
-        return res;
+  int rob(TreeNode* root) {
+    if (!root) return 0;
+    if (memo.find(root) != memo.end()) {
+      return memo[root];
     }
+    // 偷当前房子
+    int do_rob = root->val + (
+      // 左子树存在，则偷左子树的左右子树
+      (!root->left ? 0 : rob(root->left->left) + rob(root->left->right)) + 
+      // 右子树存在，则偷右子树的左右子树
+      (!root->right ? 0 : rob(root->right->left) + rob(root->right->right))
+    );
+    // 不偷当前房子
+    int donot_rob = rob(root->left) + rob(root->right);
+    int res = max(do_rob, donot_rob);
+    memo[root] = res;
+    return res;
+  }
 private:
-    unordered_map<TreeNode*, int> memo;
+  unordered_map<TreeNode*, int> memo;
 };

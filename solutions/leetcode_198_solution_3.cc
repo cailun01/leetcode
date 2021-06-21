@@ -1,5 +1,5 @@
 #include "headers.h"
-/*
+/* 198 打家劫舍
 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
 影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，
 如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
@@ -20,20 +20,21 @@
 
 */
 
-// 自底而上
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        int size = nums.size();
-        if (nums.empty()) return 0;
-        if (size == 1) return nums[0];
-        // dp[i]表示：第 i 间房子是被抢劫的最后一间，最多能抢到的钱为 x
-        vector<int> dp(size + 2, 0);
-        dp[0] = nums[0];
-        dp[1] = max(nums[1], nums[0]);
-        for (int i = 2; i < size; i++) {
-            dp[i] = max(dp[i - 1], nums[i] + dp[i - 2]);
-        }
-        return dp[size - 1];
+  int rob(vector<int>& nums) {
+    int size = nums.size();
+    if (nums.empty()) return 0;
+    if (size == 1) return nums[0];
+    // dp[i]表示：代表前i + 1个房子在满足条件下的能偷窃到的最高金额。
+    vector<int> dp(size + 2);
+    // 前1个房子能偷的金额为nums[0]
+    dp[0] = nums[0];
+    // 前2个放在能偷的金额
+    dp[1] = max(nums[0], nums[1]);
+    for (int i = 2; i < size; ++i) {
+      dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
     }
+    return dp[size - 1];
+  }
 };
