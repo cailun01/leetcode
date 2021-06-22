@@ -1,4 +1,4 @@
-/*
+/* 52 N皇后2
 n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
 给你一个整数 n ，返回 n 皇后问题 不同的解决方案的数量。
 与51相比，只需要求解方案的数量，不需要给出具体方案。
@@ -47,25 +47,25 @@ public:
       return 1;
     } else {
       int count = 0;
-      for (int i = 0; i < n; i++) {
-        if (columns.find(i) != columns.end()) {
+      for (int col = 0; col < n; col++) {
+        if (columns.find(col) != columns.end()) {
           continue;
         }
         // 从左上到右下，同一条斜线上的每个位置满足"行下标与列下标之差"相等
-        int diagonal1 = row - i;
+        int diagonal1 = row - col;
         if (diagonals1.find(diagonal1) != diagonals1.end()) {
           continue;
         }
         // 从右上到左下，同一条斜线上的每个位置满足"行下标与列下标之和"相等
-        int diagonal2 = row + i;
+        int diagonal2 = row + col;
         if (diagonals2.find(diagonal2) != diagonals2.end()) {
           continue;
         }
-        columns.insert(i);
+        columns.insert(col);
         diagonals1.insert(diagonal1);
         diagonals2.insert(diagonal2);
         count += backtrack(n, row + 1, columns, diagonals1, diagonals2);
-        columns.erase(i);
+        columns.erase(col);
         diagonals1.erase(diagonal1);
         diagonals2.erase(diagonal2);
       }
