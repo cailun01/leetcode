@@ -15,6 +15,7 @@ public:
     // 对于已经有序的子序列nums[l1...r1]和nums[l2...r2]，合并为最终序列
     // 遍历子序列，将较小的值放入temp
     int index = 0;
+    // 设置双指针 i , j 分别指向左/右子数组的首元素
     int i = l1, j = l2;
     while (i <= r1 && j <= r2) {
       if (nums[i] <= nums[j]) {
