@@ -30,20 +30,20 @@ public:
     //循环相加两个字符串相同长度的低位数部分
     while (i >= 0 && j >= 0) {
       int sum = carry;
-      sum += a.at(i--) - '0';
-      sum += b.at(j--) - '0';
+      sum += a[i--] - '0';
+      sum += b[j--] - '0';
       carry = sum / 2; //是否进位
       builder += to_string((sum % 2));
     }
     // 如果 a 还没遍历完成（a串比b串长），则继续遍历添加 a 的剩余部分
     while (i >= 0) {
-      int sum = carry + a.at(i--) - '0';
+      int sum = carry + a[i--] - '0';
       carry = sum / 2;
       builder += to_string(sum % 2);
     }
     // 如果 b 还没遍历完成（b串比a串长），则继续遍历添加 b 的剩余部分
     while (j >= 0) {
-      int sum = carry + b.at(j--) - '0';
+      int sum = carry + b[j--] - '0';
       carry = sum / 2;
       builder += to_string(sum % 2);
     }

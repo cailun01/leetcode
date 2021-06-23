@@ -33,8 +33,7 @@ public:
     vector<int> result;
     for (int j = 0; j < nums.size(); ++j) {
       int complement = target - nums[j];
-      auto it = hash.find(complement);
-      if (it != hash.end()) {
+      if (hash.find(complement) != hash.end()) {
         // 如果找到了complement而且它的下标不是当前元素的下标j
         // 则complement和nums[j]是两个不同的数
         int idx = hash[complement];
