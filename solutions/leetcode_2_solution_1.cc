@@ -31,12 +31,13 @@ public:
   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     ListNode* pre_node = new ListNode(0);
     ListNode* last_node = pre_node;
-    int val = 0;
-    while (val || l1 || l2) {
-      val = val + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
-      last_node->next = new ListNode(val % 10);
+    int sum = 0;
+    int carry = 0; // 进位
+    while (carry > 0 || l1 || l2) {
+      sum = carry + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
+      last_node->next = new ListNode(sum % 10);
       last_node = last_node->next;
-      val = val / 10;
+      carry = sum / 10;
       l1 = l1 ? l1->next : nullptr;
       l2 = l2 ? l2->next : nullptr;
     }

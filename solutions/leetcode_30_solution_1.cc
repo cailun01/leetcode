@@ -1,9 +1,31 @@
+/* 30 串联所有单词的子串
+
+给定一个字符串s和一些长度相同的单词words。找出s中恰好可以由words中所有单词串联形成的子串的起始位置。
+
+注意子串要与words中的单词完全匹配，中间不能有其他字符，但不需要考虑words中单词串联的顺序。
+
+示例 1：
+
+输入：s = "barfoothefoobarman", words = ["foo","bar"]
+输出：[0,9]
+解释：
+从索引 0 和 9 开始的子串分别是 "barfoo" 和 "foobar" 。
+输出的顺序不重要, [9,0] 也是有效答案。
+示例 2：
+
+输入：s = "wordgoodgoodgoodbestword", words = ["word","good","best","word"]
+输出：[]
+示例 3：
+
+输入：s = "barfoofoobarthefoobarman", words = ["bar","foo","the"]
+输出：[6,9,12]
+*/
 
 /*
 思路总结 map + 滑动窗口
 wordSize：单词大小
 1.用targetMap来记录words里单词和对应的数量（一个单词可能出现多次）
-2.如何遍历呢？ 起始地址是 0 到 wordSize，然后按照wordSize去移动窗口，这么做的原因是能保证考虑了所有的情况
+2.如何遍历呢？ 起始地址是 0 到 wordSize(单词长度)，然后按照wordSize去移动窗口，这么做的原因是能保证考虑了所有的情况
 3.当前遍历次数也维持一个 currMap 来记录当前words到对应的数量，对于每次档次遍历，维持窗口left = right = 起始地址
   3.1 单词在targetMap里不存在： 不满足条件，则重置窗口，清空currMap，
   3.2 单词在targetMap里存在： 增加计数，这里需要考虑两种情况
