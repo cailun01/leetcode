@@ -16,17 +16,23 @@
 class Solution {
 public:
   bool searchMatrix(vector<vector<int>>& matrix, int target) {
-    int row = matrix.size() - 1;
-    int col = 0;
-    while (row >= 0 && col < matrix[0].size()) {
-      if (matrix[row][col] > target) {
-        row--;
-      } else if (matrix[row][col] < target) {
-        col++;
+    if(matrix.size()==0) {
+      return false;
+    }
+    // 从右上角开始查找
+    int row = 0;//行
+    int col = matrix[0].size() - 1;
+    while (row <= matrix.size() - 1 && col >= 0){
+      if (target > matrix[row][col]) {
+        // target > 右上角的元素，则右上角所在行的所有元素都不用考虑了。
+        row++;
+      } else if(target < matrix[row][col]) {
+        // target < 右上角的元素，则右上角所在列的所有元素都不用考虑了。
+        col--;
       } else {
         return true;
       }
     }
-    return false;
+    return false;   
   }
 };
