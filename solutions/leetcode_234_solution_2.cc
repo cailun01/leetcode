@@ -46,7 +46,7 @@ public:
     // 反转链表，返回反转后的头节点right
     ListNode* right = reverse(slow);
     // 判断回文
-    while (fast != nullptr && fast->next != nullptr) {
+    while (right != nullptr) {
       if (left->val != right->val) {
         return false;
       }
