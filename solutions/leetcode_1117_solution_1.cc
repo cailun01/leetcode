@@ -1,4 +1,4 @@
-/*
+/* 1117. H2O生成
 现在有两种线程，氧 oxygen 和氢 hydrogen，你的目标是组织这两种线程来产生水分子。
 
 存在一个屏障（barrier）使得每个线程必须等候直到一个完整水分子能够被产生出来。
@@ -26,51 +26,61 @@
 解释: "HOHHHO", "OHHHHO", "HHOHOH", "HOHHOH", "OHHHOH", "HHOOHH", "HOHOHH" 和 "OHHOHH" 依然都是有效解。
 
 */
+
+/*
+两个变量count_o和count_h分别对氧气和氢气计数。
+hydrogen函数中的条件变量，当count_h < 2时，可以调用releaseHydrogen，
+然后count_h++。如果count_o + count_h == 3。count_o和count_h清零。
+
+oxygen函数中的条件变量，当count_o < 1时，可以调用releaseOxygen，
+然后count_o++。如果count_o + count_h == 3。count_o和count_h清零。
+*/
+
 class H2O {
 public:
-    // 氧气的计数
-    int cntO;
-    // 氢气的计数
-    int cntH;
-    mutex m;
-    condition_variable cv;
+  // 氧气的计数
+  int count_o;
+  // 氢气的计数
+  int count_h;
+  mutex m;
+  condition_variable cv;
 
-    H2O() {
-        cntO = 0;
-        cntH = 0;
-    }
+  H2O() {
+    count_o = 0;
+    count_h = 0;
+  }
 
-    void hydrogen(function<void()> releaseHydrogen) {
-        unique_lock<mutex> l(m);
-        cv.wait(l, [this](){
-            // 氢气最大是2
-            return this->cntH < 2;
-        });
-        // releaseHydrogen() outputs "H". Do not change or remove this line.
-        releaseHydrogen();
-        ++cntH;
-        // 已经构成 H2O ，重置计数器
-        if (cntH + cntO == 3) {
-            cntH = 0;
-            cntO = 0;
-        }
-        cv.notify_one();
+  void hydrogen(function<void()> releaseHydrogen) {
+    unique_lock<mutex> l(m);
+    cv.wait(l, [this](){
+        // 氢气最大是2
+        return this->count_h < 2;
+    });
+    // releaseHydrogen() outputs "H". Do not change or remove this line.
+    releaseHydrogen();
+    ++count_h;
+    // 已经构成 H2O ，重置计数器
+    if (count_h + count_o == 3) {
+        count_h = 0;
+        count_o = 0;
     }
+    cv.notify_one();
+  }
 
-    void oxygen(function<void()> releaseOxygen) {
-        unique_lock<mutex> l(m);
-        cv.wait(l, [this](){
-            // 氧气最大是1
-            return this->cntO < 1;
-        });
-        // releaseOxygen() outputs "O". Do not change or remove this line.
-        releaseOxygen();
-        ++cntO;
-        // 已经构成 H2O ，重置计数器
-        if (cntH + cntO == 3) {
-            cntH = 0;
-            cntO = 0;
-        }
-        cv.notify_one();
+  void oxygen(function<void()> releaseOxygen) {
+    unique_lock<mutex> l(m);
+    cv.wait(l, [this](){
+      // 氧气最大是1
+      return this->count_o < 1;
+    });
+    // releaseOxygen() outputs "O". Do not change or remove this line.
+    releaseOxygen();
+    ++count_o;
+    // 已经构成 H2O ，重置计数器
+    if (count_h + count_o == 3) {
+        count_h = 0;
+        count_o = 0;
     }
+    cv.notify_one();
+  }
 };

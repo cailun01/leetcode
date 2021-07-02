@@ -1,4 +1,4 @@
-/*
+/* 1188. 设计有限阻塞队列
 实现一个拥有如下方法的线程安全有限阻塞队列：
 
 BoundedBlockingQueue(int capacity) 	构造方法初始化队列，其中capacity代表队列长度上限。

@@ -1,4 +1,4 @@
-/*
+/* 1114 按序打印
 我们提供了一个类：
 
 public class Foo {
@@ -12,8 +12,6 @@ public class Foo {
 一个将会调用 second() 方法
 还有一个将会调用 third() 方法
 请设计修改程序，以确保 second() 方法在 first() 方法之后被执行，third() 方法在 second() 方法之后被执行。
-
- 
 
 示例 1:
 
@@ -38,37 +36,44 @@ public class Foo {
 你看到的输入格式主要是为了确保测试的全面性
 */
 
+/*
+用一个互斥量、一个条件变量、和一个计数器count。
+second和third只有在计数器到达指定值时才会执行print。
+first执行printFirst()后，修改count使cv.wait中的条件为True，用notify_all通知。
+second执行printSecond()后，修改count使cv.wait中的条件为True，用notify_one通知。
+*/
+
 class Foo {
 private:
-    int flag;
-    mutex mtx;
-    condition_variable cv;
+  int flag;
+  mutex mtx;
+  condition_variable cv;
 public:
-    Foo() : flag(1) {
-        
-    }
+  Foo() : flag(1) {
+      
+  }
 
-    void first(function<void()> printFirst) {
-        unique_lock<mutex> lock(mtx);
-        // printFirst() outputs "first". Do not change or remove this line.
-        printFirst();
-        flag = 2;
-        cv.notify_all();
-    }
+  void first(function<void()> printFirst) {
+    unique_lock<mutex> lock(mtx);
+    // printFirst() outputs "first". Do not change or remove this line.
+    printFirst();
+    flag = 2;
+    cv.notify_all();
+  }
 
-    void second(function<void()> printSecond) {
-        unique_lock<mutex> lock(mtx);
-        cv.wait(lock, [this](){ return flag == 2; });
-        // printSecond() outputs "second". Do not change or remove this line.
-        printSecond();
-        flag = 3;
-        cv.notify_one();
-    }
+  void second(function<void()> printSecond) {
+    unique_lock<mutex> lock(mtx);
+    cv.wait(lock, [this](){ return flag == 2; });
+    // printSecond() outputs "second". Do not change or remove this line.
+    printSecond();
+    flag = 3;
+    cv.notify_one();
+  }
 
-    void third(function<void()> printThird) {
-        unique_lock<mutex> lock(mtx);
-        cv.wait(lock, [this](){ return flag == 3; });
-        // printThird() outputs "third". Do not change or remove this line.
-        printThird();
-    }
+  void third(function<void()> printThird) {
+    unique_lock<mutex> lock(mtx);
+    cv.wait(lock, [this](){ return flag == 3; });
+    // printThird() outputs "third". Do not change or remove this line.
+    printThird();
+  }
 };
