@@ -23,47 +23,47 @@ public:
     vector<int> res;
     int rows = matrix.size(), cols = matrix[0].size();
     int left = 0, right = cols - 1, top = 0, bottom = rows - 1;
-    int target = rows * cols;
-    if (target == 0) {
+    int num_elems = rows * cols;
+    if (num_elems == 0) {
       return res;
     } 
-    if (target == 1) {
+    if (num_elems == 1) {
       res.push_back(matrix[0][0]);
       return res;
     }
-    int num = 0;
+    int global_index = 0;
     while (true) {
       // 向右移动
       for (int i = left; i <= right; ++i) {
         res.push_back(matrix[top][i]);
-        ++num;
+        ++global_index;
       }
-      if (num == target) {
+      if (global_index == num_elems) {
         break;
       }
       top++; // 重新设定上边界
       // 向下遍历
       for (int i = top; i <= bottom; ++i) {
         res.push_back(matrix[i][right]);
-        ++num;
+        ++global_index;
       }
-      if (num == target) {
+      if (global_index == num_elems) {
         break;
       }
       right--; // 重新设定右边界
       for (int i = right; i >= left; --i) {
         res.push_back(matrix[bottom][i]);
-        ++num;
+        ++global_index;
       }
-      if (num == target) {
+      if (global_index == num_elems) {
         break;
       }
       bottom--; // 重新设定下边界
       for (int i = bottom; i >= top; --i) {
         res.push_back(matrix[i][left]);
-        ++num;
+        ++global_index;
       }
-      if (num == target) {
+      if (global_index == num_elems) {
         break;
       }
       left++; // 重新设定左边界

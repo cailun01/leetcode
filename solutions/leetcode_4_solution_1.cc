@@ -27,10 +27,18 @@
 进阶：你能设计一个时间复杂度为 O(log (m+n)) 的算法解决此问题吗？
 */
 
+/*
+把求中位数转换为求第k小的元素。
+对于数组0, 1, 2, 3, 4。中位数是2，属于第3小的元素。
+对于数组0, 1, 2, 3, 4, 5。中位数是2,3取平均值。属于第3小和第4小的元素求均值。
+*/
+
 class Solution {
 public:
   int getKthElement(const vector<int>& nums1, const vector<int>& nums2, int k) {
-/* 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
+/* 主要思路：
+  
+  要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
   * 这里的 "/" 表示整除
   * nums1 中小于等于 pivot1 的元素有 nums1[0 .. k/2-2] 共计 k/2-1 个
   * nums2 中小于等于 pivot2 的元素有 nums2[0 .. k/2-2] 共计 k/2-1 个
@@ -67,7 +75,7 @@ public:
       int pivot1 = nums1[newIndex1];
       int pivot2 = nums2[newIndex2];
       if (pivot1 <= pivot2) {
-        // 不用考虑nums1[pivot1]之前的数了
+        // 不用考虑nums1[pivot1]之前的数了，跳过[index1,newIndex1]闭区间的元素
         k -= newIndex1 - index1 + 1;
         index1 = newIndex1 + 1;
       } else {
