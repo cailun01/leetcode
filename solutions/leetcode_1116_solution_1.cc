@@ -1,4 +1,4 @@
-/*
+/* 1116. 打印零与奇偶数
 假设有这么一个类：
 
 class ZeroEvenOdd {
@@ -15,8 +15,6 @@ class ZeroEvenOdd {
 每个线程都有一个 printNumber 方法来输出一个整数。请修改给出的代码以输出整数序列 010203040506... ，
 其中序列的长度必须为 2n。
 
- 
-
 示例 1：
 
 输入：n = 2
@@ -30,46 +28,46 @@ class ZeroEvenOdd {
 
 class ZeroEvenOdd {
 private:
-    int n;
-    std::mutex m;
-    std::condition_variable cond;
-    bool zero_flag = true;
-    bool odd_flag = true;
+  int n;
+  std::mutex m;
+  std::condition_variable cond;
+  bool zero_flag = true;
+  bool odd_flag = true;
 public:
-    ZeroEvenOdd(int n) {
-        this->n = n;
+  ZeroEvenOdd(int n) {
+      this->n = n;
+  }
+  // printNumber(x) outputs "x", where x is an integer.
+  void zero(function<void(int)> printNumber) {
+    for(int i = 0; i < n; ++i) {
+      std::unique_lock<std::mutex> lk(m);
+      cond.wait(lk,[this]{return zero_flag;});
+      printNumber(0);
+      zero_flag = false;
+      cond.notify_all();
     }
-    // printNumber(x) outputs "x", where x is an integer.
-    void zero(function<void(int)> printNumber) {
-        for(int i = 0; i < n; ++i) {
-            std::unique_lock<std::mutex> lk(m);
-            cond.wait(lk,[this]{return zero_flag;});
-            printNumber(0);
-            zero_flag = false;
-            cond.notify_all();
-        }
-    }
+  }
 
-    void even(function<void(int)> printNumber) {
-        for(int i = 2; i <= n; i += 2) {
-            std::unique_lock<std::mutex> lk(m);
-            cond.wait(lk,[this]{return !zero_flag && !odd_flag;});
-            printNumber(i);
-            zero_flag = true;
-            odd_flag = true;
-            cond.notify_all();
-        }
-        
+  void even(function<void(int)> printNumber) {
+    for(int i = 2; i <= n; i += 2) {
+      std::unique_lock<std::mutex> lk(m);
+      cond.wait(lk,[this]{return !zero_flag && !odd_flag;});
+      printNumber(i);
+      zero_flag = true;
+      odd_flag = true;
+      cond.notify_all();
     }
+      
+  }
 
-    void odd(function<void(int)> printNumber) {
-        for(int i = 1; i <= n; i += 2) {
-            std::unique_lock<std::mutex> lk(m);
-            cond.wait(lk,[this]{return !zero_flag && odd_flag;});
-            printNumber(i);
-            zero_flag = true;
-            odd_flag = false;
-            cond.notify_all();
-        }
+  void odd(function<void(int)> printNumber) {
+    for(int i = 1; i <= n; i += 2) {
+      std::unique_lock<std::mutex> lk(m);
+      cond.wait(lk,[this]{return !zero_flag && odd_flag;});
+      printNumber(i);
+      zero_flag = true;
+      odd_flag = false;
+      cond.notify_all();
     }
+  }
 };
