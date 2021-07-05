@@ -1,70 +1,53 @@
-class Solution {
-public:
-  int subDivide(int dividend, int divisor, bool negative) {
-    int i = 0, times = 1;
-    int originDivisor = divisor;
-    while (dividend <= divisor && dividend <= 0) {
-      dividend -= divisor;
-      i += times;           
-      if (dividend >= divisor) {
-        break;
-      }
-      // 自增翻倍，加快减法速度
-      divisor += divisor;
-      times += times;
-    }
+int Medium::divide(int dividend, int divisor)
+{
+	int Max_int = 0x7FFFFFFF;
+	int Min_int = 0x80000000;
+	// 特殊值处理 0x80000000 / -1
+	if (divisor == -1 && dividend == Min_int) return Max_int; 
+	// 符号同化
+	int flag1 = -1;
+	int flag2 = -1;
+	if (dividend >= 0)
+	{
+		flag1 = 1;
+		dividend = 0 - dividend;
+	}
+	if (divisor >= 0)
+	{
+		flag2 = 1;
+		divisor = 0 - divisor;
+	}
+	// 结果符号
+	int flag = 1;
+	if (flag1 != flag2) flag = -1;
+	// 特殊值处理 -2 / -4 
+	if (dividend > divisor) return 0;
 
-    if (dividend > originDivisor) {
-      if (negative) {
-        return -i;
-      } else {
-        return i;
-      }
-    } else {
-      if (negative) {
-        return -i + subDivide(dividend, originDivisor, negative);
-      } else {
-        return i + subDivide(dividend, originDivisor, negative);
-      }
-    }
-  }
+	int num = 0;
+	int count = 0;
+	while (dividend < 0)
+	{
+		int divisor_pow_current = divisor;
+		int divisor_pow_last = 0;
+		int result = -1;
+		while (true)
+		{
+			divisor_pow_last = divisor_pow_current;
+			// 越界处理 防止 divisor_pow_current += divisor_pow_current 越界
+			if (Min_int - divisor_pow_current > divisor_pow_current) break;
+			divisor_pow_current += divisor_pow_current;
+			if (divisor_pow_current < dividend ) break;
+			result += result; 
+		}
+		dividend -= divisor_pow_last;
+		num += result;
+	}
+	if (dividend != 0) num++;
+		
+	if (flag < 0) return num;
+	else return 0 - num;
+}
 
-  int divide(int dividend, int divisor) {
-    int i = 0, times = 1, left = 0;
-    bool negative = false;
-    
-    if (dividend == INT_MIN) {
-      if (divisor == -1) {
-        return INT_MAX;
-      } else if (divisor == 1) {
-        return INT_MIN;
-      } else if (divisor == INT_MIN) {
-        return 1;
-      }
-    }
-    if (divisor == INT_MIN) {
-      return 0;
-    }
-    if (divisor == 1) {
-        return dividend;
-    }
-    if (divisor == -1) {
-        return -dividend;
-    }
-
-    // 把所有正数转换为负数
-    if (dividend < 0 && divisor > 0) {
-      negative = true;
-      divisor = -divisor;
-    }
-    else if (dividend > 0 && divisor < 0) {
-      negative = true;
-      dividend = -dividend;
-    }
-    else if (dividend > 0 && divisor > 0) {
-       divisor = -divisor;
-      dividend = -dividend;                        
-    }
-    return subDivide(dividend, divisor, negative);
-  }
-};
+/*
+链接：https://leetcode-cn.com/problems/divide-two-integers/solution/c-shi-xian-wu-long-wu-qiang-zhi-zhuan-huan-by-st_a/
+*/
