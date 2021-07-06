@@ -2,25 +2,32 @@
 // 二分查找
 class Solution {
 public:
-    int recurse_search(vector<int>& nums, int target, int lo, int hi) {
-        if (lo == hi) {
-            if (nums.at(lo) == target) {
-                return lo;
-            } else {
-                return -1;
-            }
+  int search(vector<int>& nums, int target) {
+    // 如果nums的长度为1
+    if(nums.size() == 1) { 
+      return nums[0] == target ? 0 : -1; 
+    }
+    int left = 0, right = nums.size() - 1;
+    while(left <= right) {
+      int mid = (right + left) / 2;
+      if(nums[mid] == target) { 
+        return mid; 
+      }
+      // 如果在左边的单增序列上
+      if(nums[0] <= nums[mid]) {
+        if(nums[0] <= target && nums[mid] > target) {
+          right = mid - 1;
         } else {
-            int mid = (lo + hi) / 2;
-            int left_result = recurse_search(nums, target, lo, mid); 
-            int right_result = recurse_search(nums, target, mid + 1, hi);
-            if (left_result != -1) return left_result;
-            if (right_result != -1) return right_result;
+          left = mid + 1;
         }
-        return -1;
-
+      } else {// 如果在右边的单增序列上
+        if(nums[nums.size() - 1] >= target && target > nums[mid]) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+      }
     }
-    int search(vector<int>& nums, int target) {
-        if (nums.empty()) return -1;
-        return recurse_search(nums, target, 0, nums.size() - 1);
-    }
+    return -1;
+  }
 };
