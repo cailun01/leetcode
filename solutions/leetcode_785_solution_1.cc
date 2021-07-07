@@ -63,7 +63,7 @@ public:
   bool IsConnected(int p, int q) {
     int root_p = Find(p);
     int root_q = Find(q);
-    return root_p = root_q;
+    return root_p == root_q;
   }
 };
 
@@ -79,8 +79,8 @@ public:
           // 当前节点i与其邻接节点在同一连通域，返回false
           return false;
         }
-        // 把当前节点i的所有邻接节点adj[0...adj.size()-1]合并
-        uf.Union(adj[0], adj[i]);
+        // 把当前节点i的所有邻接节点adj[0...adj.size()-1]合并（不包括i）
+        uf.Union(adj[0], adj[j]);
       }
     }
     return true;
