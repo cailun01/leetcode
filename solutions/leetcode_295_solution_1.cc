@@ -1,4 +1,5 @@
-/*
+/* 295 数据流的中位数
+
 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
 
 例如，
@@ -21,35 +22,35 @@ findMedian() -> 2
 */
 class MedianFinder {
 private:
-    priority_queue<int, vector<int>, std::greater<int>> large; // 小顶堆
-    priority_queue<int> small; // 大顶堆
+  priority_queue<int, vector<int>, std::greater<int>> large; // 小顶堆
+  priority_queue<int> small; // 大顶堆
 public:
-    /** initialize your data structure here. */
-    MedianFinder() {
+  /** initialize your data structure here. */
+  MedianFinder() {
 
+  }
+  
+  void addNum(int num) {
+    if (small.size() >= large.size()) {
+      small.push(num);
+      large.push(small.top());
+      small.pop();
+    } else {
+      large.push(num);
+      small.push(large.top());
+      large.pop();
     }
-    
-    void addNum(int num) {
-        if (small.size() >= large.size()) {
-            small.push(num);
-            large.push(small.top());
-            small.pop();
-        } else {
-            large.push(num);
-            small.push(large.top());
-            large.pop();
-        }
+  }
+  
+  double findMedian() {
+    // 如果元素不一样多，多的那个堆的堆顶元素就是中位数
+    if (large.size() < small.size()) {
+      return small.top();
+    } else if (large.size() > small.size()) {
+      return large.top();
     }
-    
-    double findMedian() {
-        // 如果元素不一样多，多的那个堆的堆顶元素就是中位数
-        if (large.size() < small.size()) {
-            return small.top();
-        } else if (large.size() > small.size()) {
-            return large.top();
-        }
-        return (large.top() + small.top()) / 2.0;
-    }
+    return (large.top() + small.top()) / 2.0;
+  }
 };
 
 /**
