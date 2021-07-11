@@ -1,4 +1,21 @@
-/*
+/* 32 最长有效括号
+给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+
+示例 1：
+输入：s = "(()"
+输出：2
+解释：最长有效括号子串是 "()"
+
+示例 2：
+输入：s = ")()())"
+输出：4
+解释：最长有效括号子串是 "()()"
+
+示例 3：
+输入：s = ""
+输出：0
+
+
 括号匹配问题，常常可以用“栈”来解决，不匹配则入栈，匹配则出栈
 
 具体思路如下：
@@ -22,7 +39,9 @@ public:
     int len = 0;
     for(int i = 0; i < s.size(); i++) {
       if(s[i] == ')' && parenthesesStk.top().second == '(') {
+        // 将对应的'('出栈
         parenthesesStk.pop();
+        // 和剩下的字符的索引求差值
         len = max(len, i - parenthesesStk.top().first);
       } else {
         parenthesesStk.push(pair<int, char>(i, s[i]));

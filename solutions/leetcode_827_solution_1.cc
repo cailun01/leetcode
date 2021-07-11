@@ -56,9 +56,9 @@ public:
               count += island_area[grid[x][y]];
               q.insert(grid[x][y]);
             } 
-          }
+          } // end for int k = 0; k < 4
           res = max(res, count);   
-        }
+        } // end if (grid[i][j] == 0)
       }
     }
     return res;

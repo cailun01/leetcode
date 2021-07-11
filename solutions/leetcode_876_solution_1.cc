@@ -1,9 +1,7 @@
-/*
+/* 876 链表中间节点
 给定一个头结点为 head 的非空单链表，返回链表的中间结点。
 
 如果有两个中间结点，则返回第二个中间结点。
-
- 
 
 示例 1：
 
@@ -21,16 +19,16 @@ ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next 
 
 class Solution {
 public:
-    ListNode* middleNode(ListNode* head) {
-        if (head->next == nullptr) {
-            return head;
-        }
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while (fast != nullptr && fast->next != nullptr) {
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-        return slow;
+  ListNode* middleNode(ListNode* head) {
+    if (head->next == nullptr) {
+      return head;
     }
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast && fast->next) {
+      fast = fast->next->next;
+      slow = slow->next;
+    }
+    return slow;
+  }
 };
