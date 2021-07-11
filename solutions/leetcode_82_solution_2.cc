@@ -14,8 +14,8 @@
 因为对于本题而言，我们可能会删除头结点 head，为了维护一个不变的头节点，
 所以我们添加了 dummy，让dummy.next = head，这样即使 head 被删了，那么会操作 dummy.next 指向新的链表头部，
 所以最终返回的也是 dummy.next。
-
 */
+
 class Solution {
 public:
   ListNode* deleteDuplicates(ListNode* head) {
@@ -30,7 +30,7 @@ public:
         cur = cur->next;
       }
       if (pre->next == cur) {
-          //pre和cur之间没有重复节点，pre后移
+        // pre和cur之间没有重复节点，pre后移
         pre = pre->next; 
       } else {
         //pre->next指向cur的下一个位置（相当于跳过了当前的重复元素）

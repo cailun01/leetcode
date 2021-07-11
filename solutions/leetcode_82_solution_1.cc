@@ -1,3 +1,18 @@
+/* 82. 删除排序链表中的重复元素 II
+存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，
+只保留原始链表中 没有重复出现 的数字。
+
+返回同样按升序排列的结果链表。
+
+示例 1：
+输入：head = [1,2,3,3,4,4,5]
+输出：[1,2,5]
+
+示例 2：
+输入：head = [1,1,1,2,3]
+输出：[2,3]
+
+*/
 
 /* 方法一：递归
 https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/fu-xue-ming-zhu-di-gui-die-dai-yi-pian-t-wy0h/
@@ -10,9 +25,8 @@ https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/
 
 1.2 递归终止条件
 终止条件就是能想到的基本的、不用继续递归处理的case。
-
-如果 head 为空，那么肯定没有值出现重复的节点，直接返回 head；
-如果 head.next 为空，那么说明链表中只有一个节点，也没有值出现重复的节点，也直接返回 head。
+  如果 head 为空，那么肯定没有值出现重复的节点，直接返回 head；
+  如果 head.next 为空，那么说明链表中只有一个节点，也没有值出现重复的节点，也直接返回 head。
 1.3 递归调用
 什么时候需要递归呢？我们想一下这两种情况：
 1.3.1
@@ -36,20 +50,21 @@ https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/
 */
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
-      if (!head || !head->next) {
-        return head;
-      }
-      if (head->val != head->next->val) {
-        head->next = deleteDuplicates(head->next);
-      } else {
-        ListNode* move = head->next;
-        while (move && head->val == move->val) {
-          move = move->next;
-        }
-        return deleteDuplicates(move);
-      }
+  ListNode* deleteDuplicates(ListNode* head) {
+    if (!head || !head->next) {
       return head;
     }
+    if (head->val != head->next->val) {
+      head->next = deleteDuplicates(head->next);
+    } else {
+      ListNode* move = head->next;
+      while (move && head->val == move->val) {
+        move = move->next;
+      }
+      // 此时head->val != move->val
+      return deleteDuplicates(move);
+    }
+    return head;
+  }
 };
 
