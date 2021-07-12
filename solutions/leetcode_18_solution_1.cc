@@ -10,7 +10,9 @@
 class Solution {
 public:
   vector<vector<int>> fourSum(vector<int>& nums, int target) {
-    if (nums.size() < 4) return {};
+    if (nums.size() < 4) { 
+      return {};
+    }
     int num_elems = nums.size();
     sort(nums.begin(), nums.end());
     int a, b, c, d;
