@@ -11,7 +11,9 @@ class Solution {
 public:
   int maxProfit_k_inf(vector<int>& prices) {
     int num_days = prices.size();
-    if (num_days <= 1) return 0;
+    if (num_days <= 1) { 
+      return 0; 
+    }
     int max_profit = 0;
 
     for (int i = 1; i < num_days; ++i) {

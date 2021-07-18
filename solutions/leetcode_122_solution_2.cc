@@ -1,22 +1,27 @@
 #include "headers.h"
-// 贪心算法
-// 股价有升有落，需要找出所有的升区间，计算每个升区间的价格差（峰值减去谷值）作为收益，最后把所有升区间带来的收益求和就可以了。
-// 对于升区间 [a, b, c, d]，有 a <= b <= c <= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，
-// 因此每当访问到 prices[i] 比前一天价格高，即 prices[i] - prices[i-1] > 0，那么就把 prices[i] - prices[i-1] 添加到收益中。
-
-
+/*
+1. 本题在交易股票的过程中，一共会有2种状态：
+	○ dp0：手里没股票
+	○ dp1：手里有股票
+2. 初始化2种状态：
+	○ dp0 = 0
+	○ dp1 = - prices[0]
+3. 对2种状态进行状态转移：
+	○ dp0 = max(dp0, dp1 + prices[i])，前一天也是dp0状态，或者前一天是dp1状态，今天卖出一笔变成dp0状态，
+	○ dp1 = max(dp1, dp0 - prices[i])，前一天也是dp1状态，或者前一天是dp0状态，今天买入一笔变成dp1状态
+4. 最后一定是手里没有股票赚的钱最多，因此返回的是dp0
+*/
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        int num_days = prices.size();
-        if (num_days <= 1) return 0;
-        int max_profit = 0;
-
-        for (int i = 1; i < num_days; ++i) {
-            if (prices[i] > prices[i - 1]) {
-                max_profit += prices[i] - prices[i - 1];
-            }
-        }
-        return max_profit;
+  int maxProfit(vector<int>& prices) {
+    int dp0 = 0;            // 手里没股票
+    int dp1 = - prices[0];  // 手里有股票
+    for(int i = 1; i < prices.size(); i++){
+      new_dp0 = max(dp0, dp1 + prices[i]);
+      new_dp1 = max(dp1, dp0 - prices[i]);
+      dp0 = new_dp0;
+      dp1 = new_dp1;
     }
+    return dp0;
+  }
 };

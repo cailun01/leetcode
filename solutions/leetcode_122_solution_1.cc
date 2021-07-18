@@ -58,29 +58,29 @@ dp[i][j] 表示到下标为i的这一天，持股状态为j时，我们手上拥
 class Solution {
 public:
   int maxProfit(vector<int>& prices) {
-    int num_days = prices.size();
-    if (num_days <= 1) { 
+    int length = prices.size();
+    if (length <= 1) { 
       return 0; 
     }
     // 0：持有现金
     // 1：持有股票
-    vector<vector<int>> dp(num_days, vector<int>(2));
+    vector<vector<int>> dp(length, vector<int>(2));
     // 第一天持有现金
     dp[0][0] = 0;
     // 第一天持有股票
     dp[0][1] = -prices[0];
 
-    for (int i = 1; i < num_days; ++i) {
+    for (int i = 1; i < length; ++i) {
       /* 第i天，不持有股票
-      第i-1天也不持有股票，第i-1天持有股票，第i天卖掉
+      (1)第i-1天也不持有股票，(2)第i-1天持有股票，第i天卖掉
       */
       dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
       /* 第i天，持有股票
-      第i-1天也持有股票，第i-1天不持有股票，第i天买入
+      (1)第i-1天也持有股票，(2)第i-1天不持有股票，第i天买入
       */
       dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
     }
     // 最后一天不持有股票
-    return dp[num_days - 1][0];
+    return dp[length - 1][0];
   }
 };

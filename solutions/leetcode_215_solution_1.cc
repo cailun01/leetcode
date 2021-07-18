@@ -14,16 +14,20 @@
 // 堆排序
 class Solution {
 private:
-    priority_queue<int, vector<int>, greater<int>> pq; // 小顶堆
+  priority_queue<int, vector<int>, greater<int>> pq; // 小顶堆
 public:
-    int findKthLargest(vector<int>& nums, int k) {
-        for (int& i : nums) {
-            pq.push(i);
-            if (pq.size() > k) {
-                // 被弹出的元素都是较小的
-                pq.pop();
-            }
-        }
-        return pq.top();
+  int findKthLargest(vector<int>& nums, int k) {
+    for (int& i : nums) {
+      // 每个元素都要过一遍二叉堆
+      pq.push(i);
+      if (pq.size() > k) {
+        // 堆中元素多于 k 个时，删除堆顶元素
+        // 被弹出的元素都是较小的
+        pq.pop();
+      }
     }
+    // pq 中剩下的是 nums 中 k 个最大元素，
+    // 堆顶是最小的那个，即第 k 个最大元素
+    return pq.top();
+  }
 };

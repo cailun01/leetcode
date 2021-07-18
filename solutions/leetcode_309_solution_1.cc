@@ -1,4 +1,14 @@
 #include "headers.h"
+/* 309. 最佳买卖股票时机含冷冻期
+给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。​
+设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+示例:
+输入: [1,2,3,0,2]
+输出: 3 
+解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]
+*/
 
 // 每天都有三种动作：买入（buy）、卖出（sell）、无操作（rest）
 // 因为不限制交易次数，因此交易次数这个因素不影响题目，不必考虑。
@@ -22,20 +32,20 @@
 
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        int num_days = prices.size();
-        if (num_days <= 1) return 0;
-        // dp表示手中有多少钱
-        vector<vector<int>> dp(num_days, vector<int>(num_days, -1));
-        dp[0][0] = 0; //  第一天没有股票，说明没买没卖，获利为0
-        dp[0][1] = -prices[0];   // 第一天持有股票，说明买入了，花掉一笔钱
-        dp[1][0] = max(dp[0][0], dp[0][1]+prices[1]);  // 昨天就没有 或者 昨天买入今天卖出
-        dp[1][1] = max(dp[0][1], -prices[1]);  // 昨天就有 或者 昨天没有而今天买入
+  int maxProfit(vector<int>& prices) {
+    int num_days = prices.size();
+    if (num_days <= 1) return 0;
+    // dp表示手中有多少钱
+    vector<vector<int>> dp(num_days, vector<int>(num_days, -1));
+    dp[0][0] = 0; //  第一天没有股票，说明没买没卖，获利为0
+    dp[0][1] = -prices[0];   // 第一天持有股票，说明买入了，花掉一笔钱
+    dp[1][0] = max(dp[0][0], dp[0][1] + prices[1]);  // 昨天就没有 或者 昨天买入今天卖出
+    dp[1][1] = max(dp[0][1], -prices[1]);  // 昨天就有 或者 昨天没有而今天买入
 
-        for (int i = 2; i < num_days; ++i) {
-          dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]);
-          dp[i][1] = max(dp[i-1][1], dp[i-2][0] - prices[i]);
-        }
-        return dp[num_days - 1][0];    // 返回最后一天且手上没有股票时的获利情况
+    for (int i = 2; i < num_days; ++i) {
+      dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]);
+      dp[i][1] = max(dp[i-1][1], dp[i-2][0] - prices[i]);
     }
+    return dp[num_days - 1][0];    // 返回最后一天且手上没有股票时的获利情况
+  }
 };

@@ -35,14 +35,22 @@
 class Solution {
 public:
   int maxProfit(vector<int>& prices) {
-    int dp0 = 0;
-    int dp1 = -prices[0];
-    int dp2 = INT_MIN;
-
-    for (int i = 1; i < prices.size(); ++i) {
-      dp1 = max(dp1, dp0 - prices[i]);
-      dp2 = max(dp2, dp1 + prices[i]);
+    if (prices.empty()) {
+      return 0;
     }
-    return max(dp0, dp2);
+    
+    int length = prices.size();
+    // dp[i][0] 表示在第 i 天结束时，持有0份股票的情况下可以获得的最大收益；
+    // dp[i][1] 表示在第 i 天结束时，持有1份股票的情况下可以获得的最大收益；
+    vector<vector<int>> dp(length, vector<int>(2, 0));
+    dp[0][0] = 0;
+    dp[0][1] = -prices[0];
+
+    for (int i = 1; i < length; ++i) {
+      dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+      // 原本是max(dp[i - 1][1], dp[i - 1][0] - prices[i]); ，但是dp[i - 1][0]一定为0
+      dp[i][1] = max(dp[i - 1][1], -prices[i]);
+    }
+    return dp[length - 1][0];
   }
 };

@@ -17,9 +17,12 @@
 */
 
 /*
-1.记录【今天之前买入的最小值】
-2.计算【今天之前最小值买入，今天卖出的获利】，也即【今天卖出的最大获利】
-3.比较【每天的最大获利】，取最大值即可
+解法1的状态转移方程是：
+  dp[0][0] = 0;
+  dp[0][1] = -prices[0];
+  dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+  dp[i][1] = max(dp[i - 1][1], -prices[i]);
+注意到第 i 天的最大收益只和第 i - 1 天的最大收益相关，空间复杂度可以降到 O(1)。
 */
 class Solution {
 public:
@@ -27,13 +30,14 @@ public:
     if (prices.size() <= 1) { 
       return 0; 
     }
-    int num_prices = prices.size();
-    int max_profit = 0;
-    int min_price = prices[0];
-    for (int i = 1; i < num_prices; ++i) {
-      max_profit = max(max_profit, prices[i] - min_price);
-      min_price = min(min_price, prices[i]);
+    // profit0第i天结束后不持有股票
+    // profit1第i天结束后持有股票
+    int profit0 = 0, profit1 = -prices[0];
+    int length = prices.size();
+    for (int i = 1; i < length; i++) {
+      profit0 = max(profit0, profit1 + prices[i]);
+      profit1 = max(profit1, -prices[i]);
     }
-    return max_profit;
+    return profit0;
   }
 };

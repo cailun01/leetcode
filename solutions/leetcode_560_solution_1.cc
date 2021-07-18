@@ -11,24 +11,24 @@
 */
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) {
-        int size = nums.size();
-        // 构造前缀和
-        vector<int> pre_sum(size + 1, 0);
-        for (int i = 0; i < n; ++i) {
-            pre_sum[i + 1] = nums[i] + pre_sum[i];
-        }
-
-        int ans = 0;
-        // 穷举所有子数组
-        for (int i = 1; i <= n; i++) {
-            for (int j = 0; j < i; j++) {
-                // sum of nums[j..i-1]
-                if (pre_sum[i] - pre_sum[j] == k) {
-                    ans++;
-                }
-            }
-        }
-        return ans;
+  int subarraySum(vector<int>& nums, int k) {
+    int size = nums.size();
+    // 构造前缀和
+    vector<int> pre_sum(size + 1, 0);
+    for (int i = 0; i < size; ++i) {
+      pre_sum[i + 1] = nums[i] + pre_sum[i];
     }
+
+    int ans = 0;
+    // 穷举所有子数组
+    for (int i = 1; i <= size; i++) {
+      for (int j = 0; j < i; j++) {
+        // sum of nums[j..i-1]
+        if (pre_sum[i] - pre_sum[j] == k) {
+          ans++;
+        }
+      }
+    }
+    return ans;
+  }
 };
