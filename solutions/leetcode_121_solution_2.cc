@@ -25,19 +25,17 @@
 注意到第 i 天的最大收益只和第 i - 1 天的最大收益相关，空间复杂度可以降到 O(1)。
 */
 class Solution {
-public:
-  int maxProfit(vector<int>& prices) {
-    if (prices.size() <= 1) { 
-      return 0; 
+public: 
+    int maxProfit(vector<int>& prices) {
+      if (prices.size() == 0) {
+        return 0;
+      }
+      int profit0 = 0, profit1 = -prices[0];
+      int length = prices.size();
+      for (int i = 1; i < length; i++) {
+        profit0 = max(profit0, profit1 + prices[i]);
+        profit1 = max(profit1, -prices[i]);
+      }
+      return profit0;
     }
-    // profit0第i天结束后不持有股票
-    // profit1第i天结束后持有股票
-    int profit0 = 0, profit1 = -prices[0];
-    int length = prices.size();
-    for (int i = 1; i < length; i++) {
-      profit0 = max(profit0, profit1 + prices[i]);
-      profit1 = max(profit1, -prices[i]);
-    }
-    return profit0;
-  }
 };

@@ -2,7 +2,10 @@
 头条一道面试题
 
 一个链表，奇数位数字升序，偶数位数字降序，让链表变成升序的
+输入: 
 1->8->3->6->5->4->7->2->9
+输出: 
+1->2->3->4->5->6->7->8->NULL
 
 */
 #include <iostream>
@@ -48,7 +51,7 @@ tuple<Node*, Node*> divide(Node* head) {
     Node* p1 = head1;
     Node* p2 = head2;
     int count = 1;
-    while (head != nullptr) {
+    while (head) {
         if (count % 2 == 1) { // 奇数，尾插法
             Node* node1 = new Node(head->val);
             p1->next = node1;
@@ -83,8 +86,7 @@ int main()
     
     Node* new_head = new Node(-1);
     Node* dummy = new_head;
-    while (odd != nullptr 
-           && even != nullptr) {
+    while (odd && even) {
         if (odd->val <= even->val) {
             new_head->next = odd;
             odd = odd->next;
