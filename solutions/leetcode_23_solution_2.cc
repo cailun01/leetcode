@@ -35,14 +35,11 @@ lists[i].length 的总和不超过 10^4
 // 小顶堆
 class Solution {
 public:
-  struct cmp {  
-    bool operator()(ListNode *a,ListNode *b){
-      return a->val > b->val;
-    }
-  };
-    
   ListNode* mergeKLists(vector<ListNode*>& lists) {
-    priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
+    auto compare = [](ListNode *a,ListNode *b) {
+      return a->val > b->val;
+    };
+    priority_queue<ListNode*, vector<ListNode*>, decltype(compare)> pq(compare);
     for (auto head : lists) {
       if (head) {
         // 把每个链表的head放入队列

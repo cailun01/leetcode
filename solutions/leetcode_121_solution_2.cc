@@ -22,18 +22,17 @@
 3.比较【每天的最大获利】，取最大值即可
 */
 class Solution {
-public:
-  int maxProfit(vector<int>& prices) {
-    if (prices.size() <= 1) { 
-      return 0; 
+public: 
+    int maxProfit(vector<int>& prices) {
+      if (prices.size() == 0) {
+        return 0;
+      }
+      int profit0 = 0, profit1 = -prices[0];
+      int length = prices.size();
+      for (int i = 1; i < length; i++) {
+        profit0 = max(profit0, profit1 + prices[i]);
+        profit1 = max(profit1, -prices[i]);
+      }
+      return profit0;
     }
-    int num_prices = prices.size();
-    int max_profit = 0;
-    int min_price = prices[0];
-    for (int i = 1; i < num_prices; ++i) {
-      max_profit = max(max_profit, prices[i] - min_price);
-      min_price = min(min_price, prices[i]);
-    }
-    return max_profit;
-  }
-};
+}
