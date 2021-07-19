@@ -27,7 +27,7 @@ public:
     if (nums.empty()) return 0;
     if (size == 1) return nums[0];
     // dp[i]表示：代表前i + 1个房子在满足条件下的能偷窃到的最高金额。
-    vector<int> dp(size + 2);
+    vector<int> dp(size);
     // 前1个房子能偷的金额为nums[0]
     dp[0] = nums[0];
     // 前2个放在能偷的金额
